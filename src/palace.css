@@ -1032,14 +1032,14 @@
   border-color: rgba(201, 162, 39, 0.4);
 }
 
-/* ── Scene 5: Palace Rooms ── */
+/* ── Scene 5: Palace Rooms — Heritage Chambers ── */
 .palace-scene--rooms {
   background: linear-gradient(165deg, #1a0f14 0%, #3d1f28 35%, #5c3040 65%, #2a1820 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(76px, 11vh, 96px) 16px clamp(48px, 8vh, 72px);
+  padding: 72px 16px 48px;
 }
 
 .rooms-stage__bg {
@@ -1147,103 +1147,259 @@
   50% { box-shadow: 0 0 28px rgba(255, 220, 100, 0.7), 0 0 50px rgba(201, 162, 39, 0.35); }
 }
 
-.rooms-stage__chamber {
+.heritage-chamber {
   position: relative;
-  width: min(420px, 90vw);
   z-index: 5;
+  width: min(400px, 94vw);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 0;
 }
 
-.rooms-stage__caption {
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-  padding: 0 8px;
-}
-
-.rooms-stage__chamber-label {
-  display: block;
-  font-family: var(--font-elegant);
-  font-size: clamp(0.72rem, 1.6vw, 0.88rem);
-  font-style: italic;
-  letter-spacing: 0.06em;
-  margin-bottom: 6px;
-}
-
-.rooms-stage__chamber-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3.5vw, 1.75rem);
-  color: #f5e6d0;
-  letter-spacing: 0.08em;
-  margin-bottom: 6px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
-}
-
-.rooms-stage__chamber-catch {
-  font-family: var(--font-elegant);
-  font-size: clamp(0.82rem, 1.8vw, 0.96rem);
-  font-style: italic;
-  color: rgba(245, 230, 210, 0.85);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.rooms-stage__frame-wrap {
+.heritage-chamber__stage {
   position: relative;
   width: 100%;
+  padding-bottom: 24px;
 }
 
-.palace-jharokha {
+.heritage-chamber__content {
+  position: relative;
+  z-index: 4;
   width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
 }
 
-.rooms-stage__window {
+/* Elephant baraat — two elephants walk in from both sides on scroll */
+.elephant-procession {
   position: absolute;
-  top: 8%;
-  left: 12%;
-  width: 76%;
-  height: 70%;
-  overflow: hidden;
-  border-radius: 46% 46% 4% 4% / 18% 18% 3% 3%;
-  background: #1a0f14;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  min-height: 300px;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.elephant-procession--behind {
   z-index: 1;
 }
 
-.rooms-stage__visual {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+.elephant-procession--behind .elephant-procession__elephant {
+  filter: brightness(0.72) saturate(0.85)
+    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
 }
 
-.rooms-stage__visual--next {
+.elephant-procession--hidden .elephant-procession__elephant {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.elephant-procession__ground-line {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 200, 66, 0.25) 20%,
+    rgba(245, 200, 66, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+.elephant-procession__elephant {
+  position: absolute;
+  width: auto;
+  will-change: left, bottom, opacity;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.7));
+  transition: none;
+}
+
+/* Original asset faces left */
+.elephant-procession__elephant--l {
+  transform: scaleX(-1);
+  transform-origin: center bottom;
+}
+
+.elephant-procession__elephant--r {
+  transform-origin: center bottom;
+}
+
+.elephant-procession--walking .elephant-procession__elephant--l {
+  animation: elephant-walk-l 0.7s ease-in-out infinite;
+}
+
+.elephant-procession--walking .elephant-procession__elephant--r {
+  animation: elephant-walk-r 0.7s ease-in-out infinite;
+  animation-delay: 0.35s;
+}
+
+@keyframes elephant-walk-l {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50% { transform: scaleX(-1) translateY(-4px); }
+}
+
+@keyframes elephant-walk-r {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.elephant-procession__dust {
+  position: absolute;
+  bottom: 78px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(180, 140, 80, 0.15);
+  animation: elephant-dust 0.6s ease-out infinite;
+}
+
+.elephant-procession__dust--delay {
+  width: 22px;
+  height: 22px;
+  animation-delay: 0.3s;
+}
+
+@keyframes elephant-dust {
+  0% { transform: scale(0); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+.heritage-chamber__plaque {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px 14px 12px;
+  background: rgba(20, 10, 14, 0.5);
+  border: 1.5px solid #e8b923;
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(245, 208, 96, 0.08);
+}
+
+.heritage-chamber__label {
+  font-family: var(--font-elegant);
+  font-size: 0.72rem;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  margin: 0 0 4px;
+  color: #f5d060;
+}
+
+.heritage-chamber__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.8vw, 1.4rem);
+  color: #f5e6d0;
+  letter-spacing: 0.08em;
+  margin: 0 0 5px;
+  line-height: 1.15;
+}
+
+.heritage-chamber__catch {
+  font-family: var(--font-elegant);
+  font-size: clamp(0.75rem, 1.6vw, 0.88rem);
+  font-style: italic;
+  color: rgba(245, 230, 210, 0.8);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Heritage jharokha frame with poles */
+.heritage-chamber__frame {
+  width: 100%;
+}
+
+.heritage-chamber__poles-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+}
+
+.heritage-pole {
+  width: min(80px, 20vw);
+  min-height: min(48vh, 360px);
+  height: 100%;
+  flex-shrink: 0;
+  align-self: stretch;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+}
+
+.heritage-chamber__window-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: visible;
+  padding-bottom: 28px;
+}
+
+.heritage-chamber__window {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  max-height: min(48vh, 360px);
+  overflow: hidden;
+  border: 3px solid #f5d060;
+  outline: 1px solid #c9a227;
+  border-radius: 50% 50% 8px 8px / 18% 18% 8px 8px;
+  background: linear-gradient(180deg, #faf3e4 0%, #edd5a8 55%, #d4a870 100%);
+  box-shadow:
+    inset 0 0 24px rgba(201, 162, 39, 0.1),
+    0 10px 32px rgba(0, 0, 0, 0.38);
   z-index: 2;
 }
 
-.rooms-stage__room-img {
+.heritage-chamber__photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
   display: block;
-  object-fit: cover;
-  object-position: center center;
 }
 
-.rooms-stage__img-veil {
+.heritage-chamber__veil {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(26, 15, 20, 0.06) 0%,
-    transparent 25%,
-    transparent 75%,
-    rgba(26, 15, 20, 0.22) 100%
+    rgba(26, 15, 20, 0.05) 0%,
+    transparent 35%,
+    rgba(26, 15, 20, 0.2) 72%,
+    rgba(26, 15, 20, 0.45) 100%
   );
   pointer-events: none;
+  z-index: 1;
+}
+
+.heritage-chamber__dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.heritage-chamber__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.25);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  transition: background 0.35s, transform 0.35s, box-shadow 0.35s;
+}
+
+.heritage-chamber__dot.is-active {
+  background: var(--accent, #c9a227);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px var(--accent, #c9a227);
 }
 
 .rooms-stage__progress {
@@ -1255,29 +1411,6 @@
   background: linear-gradient(90deg, var(--room-accent, #c9a227), #e8a0b0, #c9a227);
   transform-origin: left;
   z-index: 50;
-}
-
-.rooms-stage__dots {
-  position: relative;
-  display: flex;
-  gap: 12px;
-  z-index: 12;
-  margin-top: 4px;
-}
-
-.rooms-stage__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(201, 162, 39, 0.25);
-  border: 1px solid rgba(201, 162, 39, 0.2);
-  transition: background 0.4s, transform 0.4s, box-shadow 0.4s;
-}
-
-.rooms-stage__dot.is-active {
-  background: var(--accent, #c9a227);
-  transform: scale(1.35);
-  box-shadow: 0 0 12px var(--accent, #c9a227);
 }
 
 /* Legacy class aliases (unused) */
