@@ -4,6 +4,7 @@ export const ScrollContext = createContext({
   progress: 0,
   section: 0,
   heroProgress: 0,
+  sectionProgress: 0,
 });
 
 export function useScroll() {
@@ -11,13 +12,12 @@ export function useScroll() {
 }
 
 export const SCENE_PHASES = {
-  invitation: { start: 0, end: 0.18 },
-  opening: { start: 0.12, end: 0.28 },
-  courtyard: { start: 0.22, end: 0.42 },
-  pathway: { start: 0.38, end: 0.52 },
-  palace: { start: 0.48, end: 0.68 },
-  gallery: { start: 0.62, end: 0.82 },
-  sunset: { start: 0.78, end: 1 },
+  gate: { start: 0, end: 0.16 },
+  courtyard: { start: 0.12, end: 0.32 },
+  venue: { start: 0.28, end: 0.48 },
+  gallery: { start: 0.44, end: 0.64 },
+  rooms: { start: 0.58, end: 0.82 },
+  sunset: { start: 0.76, end: 1 },
 };
 
 export function phaseProgress(progress, phase) {

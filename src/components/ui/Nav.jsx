@@ -2,34 +2,40 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const links = [
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
+  { href: '#courtyard', label: 'Courtyard' },
+  { href: '#venue', label: 'Venue' },
   { href: '#gallery', label: 'Gallery' },
-  { href: '#testimonials', label: 'Testimonials' },
-  { href: '#contact', label: 'Book Now', cta: true },
+  { href: '#rooms', label: 'Chambers' },
+  { href: '#invite', label: 'RSVP', cta: true },
 ];
 
-export default function Nav() {
+export default function Nav({ hidden = false }) {
   const [open, setOpen] = useState(false);
+
+  if (hidden) return null;
 
   return (
     <motion.nav
-      className="nav"
-      initial={{ y: -80, opacity: 0 }}
+      className="palace-nav"
+      initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 2, duration: 0.8 }}
+      transition={{ duration: 0.8 }}
     >
-      <a href="#hero" className="nav__logo">
-        <span className="nav__mark">Raanjhana</span>
-        <span className="nav__sub">Events</span>
+      <a href="#hero" className="palace-nav__crest">
+        <span>Raanjhana</span>
+        <em>Events</em>
       </a>
-      <button className="nav__toggle" onClick={() => setOpen(!open)} aria-label="Menu">
+      <button className="palace-nav__toggle" onClick={() => setOpen(!open)} aria-label="Menu">
         <span /><span /><span />
       </button>
-      <ul className={`nav__links ${open ? 'open' : ''}`}>
+      <ul className={`palace-nav__links ${open ? 'open' : ''}`}>
         {links.map((l) => (
           <li key={l.href}>
-            <a href={l.href} className={l.cta ? 'nav__cta' : ''} onClick={() => setOpen(false)}>
+            <a
+              href={l.href}
+              className={l.cta ? 'palace-nav__cta' : ''}
+              onClick={() => setOpen(false)}
+            >
               {l.label}
             </a>
           </li>

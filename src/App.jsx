@@ -6,15 +6,21 @@ import { ScrollContext } from './context/ScrollContext';
 import Experience from './components/canvas/Experience';
 import Loader from './components/ui/Loader';
 import Nav from './components/ui/Nav';
-import RoyalInvitationScene from './components/ui/RoyalInvitationScene';
-import ScrollSections from './components/sections/ScrollSections';
+import PalaceScrollTrack from './components/palace/PalaceScrollTrack';
+import PalaceExperience from './components/palace/PalaceExperience';
+import RoyalInvitationScene from './components/palace/RoyalInvitationScene';
 import ErrorBoundary from './components/ErrorBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [scroll, setScroll] = useState({ progress: 0, section: 0, heroProgress: 0 });
+  const [scroll, setScroll] = useState({
+    progress: 0,
+    section: 0,
+    heroProgress: 0,
+    sectionProgress: 0,
+  });
   const mainRef = useRef(null);
   const lenisRef = useRef(null);
 
@@ -54,7 +60,9 @@ export default function App() {
               end: 'bottom top',
               scrub: 0.3,
               onUpdate: (self) => {
-                if (mounted) setScroll((s) => ({ ...s, heroProgress: self.progress }));
+                if (mounted) {
+                  setScroll((s) => ({ ...s, heroProgress: self.progress }));
+                }
               },
             })
           );
@@ -68,21 +76,36 @@ export default function App() {
               end: 'bottom bottom',
               scrub: 0.5,
               onUpdate: (self) => {
-                if (mounted) setScroll((s) => ({ ...s, progress: self.progress }));
+                if (mounted) {
+                  setScroll((s) => ({ ...s, progress: self.progress }));
+                }
               },
             })
           );
         }
 
-        const panels = document.querySelectorAll('.scroll-panel[data-scene]');
+        const panels = document.querySelectorAll('.palace-panel[data-scene]');
         panels.forEach((panel, index) => {
           triggers.push(
             ScrollTrigger.create({
               trigger: panel,
-              start: 'top 60%',
-              end: 'bottom 40%',
-              onEnter: () => mounted && setScroll((s) => ({ ...s, section: index })),
-              onEnterBack: () => mounted && setScroll((s) => ({ ...s, section: index })),
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 0.15,
+              onToggle: (self) => {
+                if (self.isActive && mounted) {
+                  setScroll((s) => ({ ...s, section: index }));
+                }
+              },
+              onUpdate: (self) => {
+                if (self.isActive && mounted) {
+                  setScroll((s) => ({
+                    ...s,
+                    section: index,
+                    sectionProgress: self.progress,
+                  }));
+                }
+              },
             })
           );
         });
@@ -110,7 +133,8 @@ export default function App() {
   }, []);
 
   const showHero = scroll.section === 0;
-  const canvasOpacity = scroll.section === 0 ? Math.max(0.2, 1 - scroll.heroProgress * 1.2) : 0;
+  const canvasOpacity =
+    scroll.section === 0 ? Math.max(0, 0.28 - scroll.heroProgress * 0.3) : 0;
 
   return (
     <ErrorBoundary>
@@ -121,10 +145,11 @@ export default function App() {
             <Experience />
           </Suspense>
         </div>
-        <Nav />
+        <Nav hidden={scroll.section === 0 && scroll.heroProgress < 0.35} />
         {showHero && <RoyalInvitationScene />}
-        <main ref={mainRef} className="scroll-main">
-          <ScrollSections />
+        <PalaceExperience />
+        <main ref={mainRef} className="scroll-main scroll-main--palace">
+          <PalaceScrollTrack />
         </main>
       </ScrollContext.Provider>
     </ErrorBoundary>

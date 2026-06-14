@@ -1,34 +1,20 @@
 import { assetUrl } from '../../../utils/assets';
 
-const GATE_IMAGE = assetUrl('assets/palace-gate-arch.png');
+const GATE_IMAGE = assetUrl('assets/royal-gate-elephants.png');
 
-function HeritageDoor({ side, openProgress }) {
+function ArchDoor({ side, openProgress }) {
   const isLeft = side === 'left';
-  const angle = Math.min(85, openProgress * 90);
-  const swayPaused = openProgress > 0.08;
+  const angle = Math.min(82, openProgress * 88);
 
   return (
     <div
-      className={`heritage-door heritage-door--${side}`}
+      className={`heritage-arch-door heritage-arch-door--${side}`}
       style={{
         transform: isLeft
-          ? `perspective(2000px) rotateY(${angle}deg)`
-          : `perspective(2000px) rotateY(${-angle}deg)`,
+          ? `perspective(1400px) rotateY(${angle}deg)`
+          : `perspective(1400px) rotateY(${-angle}deg)`,
       }}
-    >
-      <div
-        className="heritage-door__panel"
-        style={{ animationPlayState: swayPaused ? 'paused' : 'running' }}
-      >
-        <img
-          src={GATE_IMAGE}
-          alt=""
-          className="heritage-door__img"
-          aria-hidden="true"
-          draggable={false}
-        />
-      </div>
-    </div>
+    />
   );
 }
 
@@ -38,7 +24,7 @@ function HeritageGateEntrance({ openProgress }) {
   if (openProgress >= 0.98) return null;
 
   return (
-    <div className="heritage-gate heritage-gate--palace-arch">
+    <div className="heritage-gate heritage-gate--sandstone">
       <div className="heritage-gate__stage">
         <div className="heritage-gate__artboard">
           <img
@@ -48,29 +34,31 @@ function HeritageGateEntrance({ openProgress }) {
             aria-hidden="true"
             draggable={false}
           />
-          <HeritageDoor side="left" openProgress={openProgress} />
-          <HeritageDoor side="right" openProgress={openProgress} />
 
-          <div className="heritage-gate__overlay" style={{ opacity: textOpacity }}>
-            <div className="heritage-gate__center-slot">
-              <div className="heritage-gate__center">
-                <span className="heritage-gate__om">ॐ</span>
-                <p className="heritage-gate__pre">Beginning of Forever</p>
-                <h1 className="heritage-gate__title">RAANJHANA EVENTS</h1>
-                <p className="heritage-gate__tagline">
-                  Luxury Wedding Planners<br />&amp; Destination Celebrations
-                </p>
-                <div className="heritage-gate__divider" />
-                <p className="heritage-gate__hint">Scroll to open the royal gate</p>
-              </div>
-            </div>
+          <div className="heritage-arch-doors">
+            <ArchDoor side="left" openProgress={openProgress} />
+            <ArchDoor side="right" openProgress={openProgress} />
+            <div
+              className="heritage-arch-doors__seam"
+              style={{ opacity: Math.max(0, 1 - openProgress * 1.5) }}
+              aria-hidden="true"
+            />
           </div>
 
-          <div
-            className="heritage-gate__seam"
-            style={{ opacity: Math.max(0, 1 - openProgress * 1.5) }}
-            aria-hidden="true"
-          />
+          <div className="heritage-gate__overlay" style={{ opacity: textOpacity }}>
+            <div className="heritage-gate__center">
+              <span className="heritage-gate__om">ॐ</span>
+              <p className="heritage-gate__pre">Beginning of Forever</p>
+              <h1 className="heritage-gate__title">
+                RAANJHANA
+                <br />
+                EVENTS
+              </h1>
+              <p className="heritage-gate__tagline">Luxury Wedding Planners</p>
+              <div className="heritage-gate__divider" />
+              <p className="heritage-gate__hint">Scroll to open the royal gate</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -79,7 +67,7 @@ function HeritageGateEntrance({ openProgress }) {
 
 function HeritageLoader() {
   return (
-    <div className="heritage-loader heritage-loader--palace-arch">
+    <div className="heritage-loader heritage-loader--sandstone">
       <div className="heritage-loader__stage">
         <div className="heritage-loader__artboard">
           <img
@@ -89,11 +77,13 @@ function HeritageLoader() {
             aria-hidden="true"
             draggable={false}
           />
-          <div className="heritage-gate__center-slot">
-            <div className="heritage-loader__center">
-              <h2>RAANJHANA EVENTS</h2>
-              <p>Opening your royal invitation…</p>
-            </div>
+          <div className="heritage-loader__center">
+            <h2>
+              RAANJHANA
+              <br />
+              EVENTS
+            </h2>
+            <p>Opening your royal invitation…</p>
           </div>
         </div>
       </div>

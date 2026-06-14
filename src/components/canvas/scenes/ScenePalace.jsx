@@ -8,8 +8,8 @@ export default function ScenePalace({ progress }) {
   const group = useRef();
   const water = useRef();
   const elephant = useRef();
-  const t = phaseProgress(progress, 'palace');
-  const visible = progress > 0.42 && progress < 0.78;
+  const t = phaseProgress(progress, 'venue');
+  const visible = progress > 0.28 && progress < 0.64;
 
   useFrame((state) => {
     if (!group.current) return;

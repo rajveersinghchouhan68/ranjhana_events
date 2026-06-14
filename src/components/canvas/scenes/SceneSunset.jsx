@@ -5,7 +5,7 @@ import { phaseProgress, easeOutCubic } from '../../../context/ScrollContext';
 export default function SceneSunset({ progress }) {
   const group = useRef();
   const t = phaseProgress(progress, 'sunset');
-  const visible = progress > 0.72;
+  const visible = progress > 0.76;
 
   useFrame(() => {
     if (!group.current) return;

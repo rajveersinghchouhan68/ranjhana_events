@@ -7,7 +7,7 @@ import Lantern from '../../models/Lantern';
 export default function SceneCourtyard({ progress }) {
   const group = useRef();
   const t = phaseProgress(progress, 'courtyard');
-  const visible = progress > 0.2 && progress < 0.55;
+  const visible = progress > 0.12 && progress < 0.48;
 
   useFrame((state) => {
     if (!group.current) return;

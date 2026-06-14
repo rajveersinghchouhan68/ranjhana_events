@@ -12,8 +12,8 @@ export default function SceneInvitation({ progress }) {
   const group = useRef();
   const leftPanel = useRef();
   const rightPanel = useRef();
-  const openT = phaseProgress(progress, 'opening');
-  const inviteT = 1 - phaseProgress(progress, 'invitation');
+  const openT = phaseProgress(progress, 'gate');
+  const inviteT = 1 - phaseProgress(progress, 'gate');
   const visible = progress < 0.35;
 
   useFrame((state) => {
