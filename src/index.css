@@ -512,6 +512,101 @@ button, input, textarea { font: inherit; color: inherit; }
   max-height: calc(100vh - 72px);
 }
 
+.heritage-gate--palace-arch .heritage-gate__stage,
+.heritage-loader--palace-arch .heritage-loader__stage {
+  background: #f4d4d8;
+  align-items: center;
+}
+
+.heritage-gate--palace-arch .heritage-gate__artboard,
+.heritage-loader--palace-arch .heritage-loader__artboard {
+  width: min(100vw, calc((100vh - 72px) * 1.836));
+  height: min(calc(100vh - 72px), calc(100vw / 1.836));
+  max-width: 100vw;
+  max-height: calc(100vh - 72px);
+}
+
+.heritage-loader--palace-arch .heritage-loader__artboard {
+  width: min(100vw, calc(100vh * 1.836));
+  height: min(100vh, calc(100vw / 1.836));
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* Text sits inside the arch opening of the artwork */
+.heritage-gate--palace-arch .heritage-gate__center-slot,
+.heritage-loader--palace-arch .heritage-gate__center-slot {
+  position: absolute;
+  top: 9%;
+  left: 29.5%;
+  width: 41%;
+  height: 80%;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.heritage-gate--palace-arch .heritage-gate__center,
+.heritage-loader--palace-arch .heritage-loader__center {
+  position: static;
+  transform: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 4%;
+}
+
+.heritage-gate--palace-arch .heritage-gate__center-mask,
+.heritage-loader--palace-arch .heritage-gate__center-mask {
+  display: none;
+}
+
+.heritage-gate--palace-arch .heritage-gate__title,
+.heritage-loader--palace-arch .heritage-loader__center h2 {
+  color: #5c2a32;
+  font-size: clamp(0.95rem, 2.8vw, 1.75rem);
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 8px rgba(255, 230, 235, 0.8);
+}
+
+.heritage-gate--palace-arch .heritage-gate__pre,
+.heritage-gate--palace-arch .heritage-gate__tagline,
+.heritage-loader--palace-arch .heritage-loader__center p {
+  color: #7a3a42;
+  font-size: clamp(0.65rem, 1.4vw, 0.9rem);
+}
+
+.heritage-gate--palace-arch .heritage-gate__om {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  margin-bottom: 4px;
+}
+
+.heritage-gate--palace-arch .heritage-gate__divider {
+  margin: 8px auto;
+  width: 36px;
+}
+
+.heritage-gate--palace-arch .heritage-gate__hint {
+  font-size: 0.5rem;
+  color: #6a3540;
+  margin-top: 6px;
+}
+
+.heritage-gate--palace-arch .heritage-door__panel {
+  animation: none;
+  background: #f4d4d8;
+}
+
+.heritage-gate--palace-arch .heritage-gate__seam {
+  top: 9%;
+  bottom: 11%;
+  height: auto;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, #3d2228 15%, #3d2228 85%, transparent 100%);
+  box-shadow: none;
+}
+
 .heritage-gate__base,
 .heritage-loader__bg {
   width: 100%;

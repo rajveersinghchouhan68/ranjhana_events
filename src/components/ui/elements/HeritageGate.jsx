@@ -1,4 +1,4 @@
-const GATE_IMAGE = '/assets/heritage-gate.png';
+const GATE_IMAGE = '/assets/palace-gate-arch.png';
 
 function HeritageDoor({ side, openProgress }) {
   const isLeft = side === 'left';
@@ -36,7 +36,7 @@ function HeritageGateEntrance({ openProgress }) {
   if (openProgress >= 0.98) return null;
 
   return (
-    <div className="heritage-gate">
+    <div className="heritage-gate heritage-gate--palace-arch">
       <div className="heritage-gate__stage">
         <div className="heritage-gate__artboard">
           <img
@@ -50,16 +50,17 @@ function HeritageGateEntrance({ openProgress }) {
           <HeritageDoor side="right" openProgress={openProgress} />
 
           <div className="heritage-gate__overlay" style={{ opacity: textOpacity }}>
-            <div className="heritage-gate__center-mask" aria-hidden="true" />
-            <div className="heritage-gate__center">
-              <span className="heritage-gate__om">ॐ</span>
-              <p className="heritage-gate__pre">Beginning of Forever</p>
-              <h1 className="heritage-gate__title">RAANJHANA EVENTS</h1>
-              <p className="heritage-gate__tagline">
-                Luxury Wedding Planners<br />&amp; Destination Celebrations
-              </p>
-              <div className="heritage-gate__divider" />
-              <p className="heritage-gate__hint">Scroll to open the royal gate</p>
+            <div className="heritage-gate__center-slot">
+              <div className="heritage-gate__center">
+                <span className="heritage-gate__om">ॐ</span>
+                <p className="heritage-gate__pre">Beginning of Forever</p>
+                <h1 className="heritage-gate__title">RAANJHANA EVENTS</h1>
+                <p className="heritage-gate__tagline">
+                  Luxury Wedding Planners<br />&amp; Destination Celebrations
+                </p>
+                <div className="heritage-gate__divider" />
+                <p className="heritage-gate__hint">Scroll to open the royal gate</p>
+              </div>
             </div>
           </div>
 
@@ -76,7 +77,7 @@ function HeritageGateEntrance({ openProgress }) {
 
 function HeritageLoader() {
   return (
-    <div className="heritage-loader">
+    <div className="heritage-loader heritage-loader--palace-arch">
       <div className="heritage-loader__stage">
         <div className="heritage-loader__artboard">
           <img
@@ -86,10 +87,11 @@ function HeritageLoader() {
             aria-hidden="true"
             draggable={false}
           />
-          <div className="heritage-gate__center-mask" aria-hidden="true" />
-          <div className="heritage-loader__center">
-            <h2>RAANJHANA EVENTS</h2>
-            <p>Opening your royal invitation…</p>
+          <div className="heritage-gate__center-slot">
+            <div className="heritage-loader__center">
+              <h2>RAANJHANA EVENTS</h2>
+              <p>Opening your royal invitation…</p>
+            </div>
           </div>
         </div>
       </div>
