@@ -67,7 +67,7 @@ export default function PalaceRoomsScene() {
       <div className="rooms-stage__garland rooms-stage__garland--r" aria-hidden="true" />
       <FloatingPetals count={12} />
 
-      <ElephantProcession progress={roomLocal} />
+      <ElephantProcession progress={sectionProgress} />
 
       <div className="heritage-chamber">
         <div className="heritage-chamber__stage">

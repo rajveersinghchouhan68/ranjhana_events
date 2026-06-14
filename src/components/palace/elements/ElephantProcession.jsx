@@ -17,6 +17,11 @@ function easeInOut(t) {
   return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 }
 
+/**
+ * One continuous baraat across the whole Chambers section.
+ * progress 0  → section opens, elephants at page bottom corners
+ * progress 1  → final chamber image, elephants hide behind center photo
+ */
 export default function ElephantProcession({ progress = 0 }) {
   const [stageW, setStageW] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 0,
@@ -29,11 +34,11 @@ export default function ElephantProcession({ progress = 0 }) {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  const started = progress > 0.015;
-  const walk = easeInOut(clamp01((progress - 0.02) / 0.75));
-  const hide = clamp01((progress - 0.72) / 0.28);
-  const isWalking = started && walk < 0.98 && hide < 0.8;
-  const behind = hide > 0.15;
+  // Single journey: corners → center over full section; hide only at the end
+  const walk = easeInOut(clamp01(progress / 0.9));
+  const hide = clamp01((progress - 0.82) / 0.18);
+  const isWalking = walk < 0.98 && hide < 0.85;
+  const behind = hide > 0.12;
 
   const elephantH = Math.min(ELEPHANT_H, Math.max(140, stageW * 0.26));
   const elephantW = elephantH * 1.1;
@@ -46,7 +51,6 @@ export default function ElephantProcession({ progress = 0 }) {
     );
   }
 
-  // Start at bottom-left / bottom-right page corners; meet at center behind photo
   const leftX = lerp(CORNER_INSET, stageW * 0.5 - elephantW * 0.88, walk);
   const rightX = lerp(stageW - elephantW - CORNER_INSET, stageW * 0.5 - elephantW * 0.12, walk);
 
@@ -54,11 +58,9 @@ export default function ElephantProcession({ progress = 0 }) {
   const hideLift = hide * 52;
   const lift = arcLift + hideLift;
 
-  const opacity = !started
-    ? 0
-    : hide > 0.45
-      ? Math.max(0, 1 - (hide - 0.45) * 1.8)
-      : 1;
+  const opacity = hide > 0.4
+    ? Math.max(0, 1 - (hide - 0.4) * 1.7)
+    : 1;
 
   return (
     <div
@@ -66,7 +68,7 @@ export default function ElephantProcession({ progress = 0 }) {
         'elephant-procession',
         behind ? 'elephant-procession--behind' : '',
         isWalking ? 'elephant-procession--walking' : '',
-        hide > 0.9 ? 'elephant-procession--hidden' : '',
+        hide > 0.92 ? 'elephant-procession--hidden' : '',
       ].filter(Boolean).join(' ')}
       aria-hidden="true"
     >
