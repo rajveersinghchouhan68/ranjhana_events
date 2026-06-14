@@ -282,7 +282,14 @@
   transform-origin: center center;
 }
 
-/* Only the center arch opens — centered on artboard */
+/* Only the center arch opens — scalloped Rajasthani wall shape */
+.heritage-arch-clips {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .heritage-arch-doors {
   position: absolute;
   top: 11.5%;
@@ -292,8 +299,7 @@
   transform: translateX(-50%);
   z-index: 3;
   pointer-events: none;
-  overflow: hidden;
-  border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+  overflow: visible;
 }
 
 .heritage-arch-doors__reveal {
@@ -308,32 +314,56 @@
   top: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(180deg, #ffffff 0%, #faf6f0 100%);
-  border: 1px solid rgba(160, 120, 80, 0.15);
+  background:
+    linear-gradient(90deg, rgba(210, 180, 140, 0.12) 0%, transparent 18%),
+    linear-gradient(180deg, #fffefb 0%, #faf6f0 72%, #f2ebe0 100%);
   transition: transform 0.08s linear;
   will-change: transform;
   z-index: 2;
-  box-shadow: inset 0 0 16px rgba(200, 170, 130, 0.06);
+  box-shadow: inset 0 0 24px rgba(200, 170, 130, 0.08);
 }
 
 .heritage-arch-door--left {
   left: 0;
-  border-right: 1px solid rgba(139, 90, 43, 0.25);
+  box-shadow:
+    inset -3px 0 8px rgba(139, 90, 43, 0.08),
+    inset 0 0 24px rgba(200, 170, 130, 0.08);
 }
 
 .heritage-arch-door--right {
   right: 0;
-  border-left: 1px solid rgba(139, 90, 43, 0.25);
+  box-shadow:
+    inset 3px 0 8px rgba(139, 90, 43, 0.08),
+    inset 0 0 24px rgba(200, 170, 130, 0.08);
+}
+
+/* Decorative arch rim tracing the scalloped wall edge */
+.heritage-arch-outline {
+  position: absolute;
+  top: 11.5%;
+  left: 50%;
+  width: 33%;
+  height: 42%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.heritage-arch-outline__path {
+  fill: none;
+  stroke: rgba(139, 90, 43, 0.28);
+  stroke-width: 0.6;
 }
 
 .heritage-arch-doors__seam {
   position: absolute;
-  top: 0;
+  top: 9%;
   bottom: 0;
   left: 50%;
   width: 1px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(139, 90, 43, 0.45), transparent);
+  background: linear-gradient(180deg, rgba(139, 90, 43, 0.35), rgba(139, 90, 43, 0.5), rgba(139, 90, 43, 0.2));
   z-index: 4;
 }
 
@@ -374,6 +404,7 @@
   justify-content: center;
   text-align: center;
   z-index: 2;
+  background: linear-gradient(180deg, #fffefb 0%, #faf6f0 100%);
 }
 
 .heritage-gate--sandstone .heritage-gate__title,
