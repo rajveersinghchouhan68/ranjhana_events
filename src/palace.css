@@ -39,6 +39,7 @@
   width: 100%;
   height: 100%;
   pointer-events: auto;
+  will-change: opacity;
 }
 
 /* Hide legacy SaaS sections when palace journey is active */
@@ -61,7 +62,7 @@
 }
 
 .palace-panel__spacer--long {
-  height: 160vh;
+  height: 200vh;
 }
 
 /* ── Shared palace scene ── */
@@ -1322,6 +1323,7 @@
   border-radius: 4px;
   backdrop-filter: blur(6px);
   box-shadow: 0 0 12px rgba(245, 208, 96, 0.08);
+  will-change: opacity, transform;
 }
 
 .heritage-chamber__label {
@@ -1421,6 +1423,11 @@
   object-fit: contain;
   object-position: center bottom;
   display: block;
+  will-change: opacity;
+}
+
+.heritage-chamber__photo--next {
+  z-index: 1;
 }
 
 .heritage-chamber__veil {
@@ -1449,7 +1456,7 @@
   border-radius: 50%;
   background: rgba(201, 162, 39, 0.25);
   border: 1px solid rgba(201, 162, 39, 0.2);
-  transition: background 0.35s, transform 0.35s, box-shadow 0.35s;
+  transition: background 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .heritage-chamber__dot.is-active {

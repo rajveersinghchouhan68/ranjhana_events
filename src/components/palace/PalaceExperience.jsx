@@ -14,6 +14,8 @@ const SCENES = {
   5: SunsetInviteScene,
 };
 
+const SCENE_EASE = [0.33, 0, 0.2, 1];
+
 export default function PalaceExperience() {
   const { section, heroProgress } = useScroll();
 
@@ -32,14 +34,14 @@ export default function PalaceExperience() {
 
   return (
     <div className="palace-world" style={{ opacity: revealOpacity }}>
-      <AnimatePresence initial={false}>
+      <AnimatePresence mode="sync" initial={false}>
         <motion.div
           key={activeSection}
           className="palace-world__scene"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: SCENE_EASE }}
         >
           <Scene />
         </motion.div>

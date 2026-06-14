@@ -65,6 +65,7 @@ export default function App() {
 
   useEffect(() => {
     let mounted = true;
+    let scrollSyncId = null;
 
     const finishLoading = () => {
       if (mounted) setLoading(false);
@@ -75,15 +76,28 @@ export default function App() {
     const initScroll = () => {
       try {
         const lenis = new Lenis({
-          duration: 1.6,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          duration: 2.1,
+          easing: (t) => 1 - Math.pow(1 - t, 4),
           smoothWheel: true,
+          wheelMultiplier: 0.75,
+          touchMultiplier: 1.15,
+          syncTouch: true,
         });
         lenisRef.current = lenis;
 
-        lenis.on('scroll', (e) => {
+        let pendingScroll = 0;
+
+        const flushScroll = () => {
+          scrollSyncId = null;
           ScrollTrigger.update();
-          syncPalaceScroll(e.scroll, mounted, setScroll, mainRef.current);
+          syncPalaceScroll(pendingScroll, mounted, setScroll, mainRef.current);
+        };
+
+        lenis.on('scroll', (e) => {
+          pendingScroll = e.scroll;
+          if (!scrollSyncId) {
+            scrollSyncId = requestAnimationFrame(flushScroll);
+          }
         });
 
         function raf(time) {
@@ -107,6 +121,7 @@ export default function App() {
     return () => {
       mounted = false;
       clearTimeout(timer);
+      if (scrollSyncId) cancelAnimationFrame(scrollSyncId);
       ScrollTrigger.getAll().forEach((t) => t.kill());
       if (lenisRef.current) {
         lenisRef.current.destroy();

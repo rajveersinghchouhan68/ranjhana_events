@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { useScroll } from '../../../context/ScrollContext';
 import { assetUrl } from '../../../utils/assets';
 import FloatingPetals from '../elements/FloatingPetals';
@@ -48,6 +47,12 @@ const ROOMS = [
   },
 ];
 
+function chamberFade(local) {
+  if (local < 0.1) return local / 0.1;
+  if (local > 0.9) return (1 - local) / 0.1;
+  return 1;
+}
+
 export default function PalaceRoomsScene() {
   const { sectionProgress } = useScroll();
   const total = ROOMS.length;
@@ -55,6 +60,9 @@ export default function PalaceRoomsScene() {
   const roomIndex = Math.min(total - 1, Math.floor(roomProgress));
   const roomLocal = roomProgress - roomIndex;
   const room = ROOMS[roomIndex];
+  const nextRoom = ROOMS[Math.min(roomIndex + 1, total - 1)];
+  const textOpacity = chamberFade(roomLocal);
+  const textLift = (1 - textOpacity) * 8;
 
   return (
     <div
@@ -72,25 +80,25 @@ export default function PalaceRoomsScene() {
       <div className="heritage-chamber">
         <div className="heritage-chamber__stage">
           <div className="heritage-chamber__content">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={room.name}
-                className="heritage-chamber__plaque"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.35 }}
-              >
-                <p className="heritage-chamber__label" style={{ color: room.accent }}>
-                  Chamber {String(roomIndex + 1).padStart(2, '0')} · {room.tag}
-                </p>
-                <h2 className="heritage-chamber__title">{room.name}</h2>
-                <p className="heritage-chamber__catch">{room.catch}</p>
-              </motion.div>
-            </AnimatePresence>
+            <div
+              className="heritage-chamber__plaque"
+              style={{
+                opacity: textOpacity,
+                transform: `translateY(${textLift}px)`,
+              }}
+            >
+              <p className="heritage-chamber__label" style={{ color: room.accent }}>
+                Chamber {String(roomIndex + 1).padStart(2, '0')} · {room.tag}
+              </p>
+              <h2 className="heritage-chamber__title">{room.name}</h2>
+              <p className="heritage-chamber__catch">{room.catch}</p>
+            </div>
 
             <HeritageChamberFrame
               image={room.image}
+              nextImage={roomIndex < total - 1 ? nextRoom.image : null}
+              nextFocus={roomIndex < total - 1 ? nextRoom.focus : undefined}
+              blend={roomLocal}
               alt={room.name}
               focus={room.focus}
             />
