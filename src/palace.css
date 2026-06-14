@@ -614,39 +614,65 @@
   color: rgba(74, 48, 32, 0.85);
 }
 
-/* ── Scene 3: Wedding Venue ── */
+/* ── Scene 3: Wedding Venue — split palace frame on scroll ── */
 .palace-scene--venue {
-  background: linear-gradient(180deg, #fff8f0, #f0e0c8);
+  background: #f5ebe4;
+  overflow: hidden;
 }
 
-.palace-scene--venue .invitation-prose__pre,
-.palace-scene--venue .invitation-prose__title,
-.palace-scene--venue .invitation-prose__body {
-  color: #4a3020;
+.venue__center-light {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #fdf6f2 0%, #f8ece6 45%, #f3e4dc 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.palace-scene--venue .invitation-prose__pre {
-  color: #6a4838;
+.venue__split-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.palace-scene--venue .invitation-prose__body {
-  color: rgba(74, 48, 32, 0.88);
+.venue__frame-panel {
+  position: absolute;
+  top: 0;
+  width: 50.5%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transition: transform 0.06s linear;
+  filter: saturate(1.05);
 }
 
-.palace-scene--venue .invitation-prose__border {
-  background: rgba(255, 248, 240, 0.55);
-  border-color: rgba(201, 162, 39, 0.4);
+.venue__frame-panel--left {
+  left: 0;
+  object-position: right center;
+}
+
+.venue__frame-panel--right {
+  right: 0;
+  object-position: left center;
+}
+
+.venue__center-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  will-change: transform, opacity;
+  pointer-events: none;
 }
 
 .venue__mandap-bg {
   position: absolute;
-  top: 50%;
+  top: 46%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(480px, 72vw);
+  width: min(420px, 68vw);
   height: auto;
-  opacity: 0.92;
-  filter: drop-shadow(0 16px 40px rgba(92, 61, 43, 0.22));
+  transform-origin: center center;
+  filter: drop-shadow(0 16px 40px rgba(92, 61, 43, 0.18));
   z-index: 1;
 }
 
@@ -707,15 +733,8 @@
 
 .venue__art-frame {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   width: clamp(100px, 14vw, 160px);
-  animation: frame-float 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.5s);
-}
-
-@keyframes frame-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
 }
 
 .venue__art-frame-inner {
@@ -727,6 +746,29 @@
   min-height: 80px;
   display: flex;
   align-items: flex-end;
+}
+
+.palace-scene--venue .invitation-prose {
+  z-index: 5;
+}
+
+.palace-scene--venue .invitation-prose__pre,
+.palace-scene--venue .invitation-prose__title,
+.palace-scene--venue .invitation-prose__body {
+  color: #4a3020;
+}
+
+.palace-scene--venue .invitation-prose__pre {
+  color: #6a4838;
+}
+
+.palace-scene--venue .invitation-prose__body {
+  color: rgba(74, 48, 32, 0.88);
+}
+
+.palace-scene--venue .invitation-prose__border {
+  background: rgba(255, 248, 240, 0.65);
+  border-color: rgba(201, 162, 39, 0.4);
 }
 
 .venue__art-caption {
