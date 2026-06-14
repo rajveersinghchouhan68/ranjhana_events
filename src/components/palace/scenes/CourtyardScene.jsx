@@ -1,7 +1,7 @@
 import { useScroll } from '../../../context/ScrollContext';
-import { assetUrl } from '../../../utils/assets';
 import FloatingPetals from '../elements/FloatingPetals';
 import InvitationProse from '../elements/InvitationProse';
+import CourtyardDancers from '../elements/CourtyardDancers';
 
 export default function CourtyardScene() {
   const { sectionProgress } = useScroll();
@@ -23,9 +23,7 @@ export default function CourtyardScene() {
         <div className="courtyard__lantern courtyard__lantern--r" />
         <div className="courtyard__lantern courtyard__lantern--c" />
 
-        <div className="courtyard__dancers">
-          <img src={assetUrl('assets/dancers-frame.png')} alt="" aria-hidden="true" />
-        </div>
+        <CourtyardDancers />
 
         <div className="courtyard__dupatta courtyard__dupatta--1" />
         <div className="courtyard__dupatta courtyard__dupatta--2" />

@@ -5,45 +5,23 @@ import InvitationProse from '../elements/InvitationProse';
 import FloatingPetals from '../elements/FloatingPetals';
 
 const SETUPS = [
-  { label: 'Royal Mandap', x: '12%', y: '42%' },
-  { label: 'Floral Symphony', x: '72%', y: '38%' },
-  { label: 'Palace Seating', x: '8%', y: '58%' },
-  { label: 'Destination Altar', x: '68%', y: '54%' },
+  { label: 'Royal Mandap', x: '10%', y: '38%' },
+  { label: 'Floral Symphony', x: '74%', y: '36%' },
+  { label: 'Palace Seating', x: '8%', y: '56%' },
+  { label: 'Destination Altar', x: '70%', y: '52%' },
 ];
 
 export default function WeddingVenueScene() {
   const { sectionProgress } = useScroll();
-  const archOpen = Math.min(1, sectionProgress * 2.5);
-  const elephantX = -30 + sectionProgress * 38;
-  const trunkLift = sectionProgress * -22;
 
   return (
     <div className="palace-scene palace-scene--venue">
-      <div className="venue__arch-frame">
-        <div
-          className="venue__arch-door venue__arch-door--l"
-          style={{ transform: `scaleX(${0.15 + archOpen * 0.85})`, transformOrigin: 'left center' }}
-        />
-        <div
-          className="venue__arch-door venue__arch-door--r"
-          style={{ transform: `scaleX(${0.15 + archOpen * 0.85})`, transformOrigin: 'right center' }}
-        />
-      </div>
-
       <img
         src={assetUrl('assets/mandap-elephants.png')}
         alt=""
         className="venue__mandap-bg"
         aria-hidden="true"
       />
-
-      <div
-        className="venue__hero-elephant"
-        style={{ transform: `translateX(${elephantX}%)` }}
-      >
-        <img src={assetUrl('assets/elephant-decorated.png')} alt="" aria-hidden="true" />
-        <div className="venue__trunk" style={{ transform: `rotate(${trunkLift}deg)` }} />
-      </div>
 
       {SETUPS.map((s, i) => (
         <motion.div
@@ -53,7 +31,7 @@ export default function WeddingVenueScene() {
             left: s.x,
             top: s.y,
             '--i': i,
-            opacity: sectionProgress > i * 0.15 ? 1 : 0,
+            opacity: sectionProgress > i * 0.12 + 0.1 ? 1 : 0.35,
           }}
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 4 + i, repeat: Infinity, ease: 'easeInOut' }}

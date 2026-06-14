@@ -6,9 +6,9 @@ import { HeritageGateEntrance } from '../ui/elements/HeritageGate';
 
 export default function RoyalInvitationScene() {
   const { heroProgress = 0 } = useScroll();
-  const openProgress = Math.min(1, heroProgress * 1.1);
-  const fadeOut = Math.max(0, 1 - Math.max(0, (heroProgress - 0.55) * 2.8));
-  const zoom = 1 + openProgress * 0.03;
+  const openProgress = Math.min(1, heroProgress * 1.15);
+  const fadeOut = Math.max(0, 1 - Math.max(0, (heroProgress - 0.84) * 6));
+  const zoom = 1 + openProgress * 0.04;
 
   if (fadeOut <= 0) return null;
 

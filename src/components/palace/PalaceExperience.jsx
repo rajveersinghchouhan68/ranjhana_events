@@ -18,19 +18,29 @@ const fade = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
 };
 
 export default function PalaceExperience() {
-  const { section } = useScroll();
-  const Scene = SCENES[section];
+  const { section, heroProgress } = useScroll();
 
+  let activeSection = section;
+  if (section === 0 && heroProgress >= 0.68) {
+    activeSection = 1;
+  }
+
+  const Scene = SCENES[activeSection];
   if (!Scene) return null;
 
+  const earlyReveal = section === 0 && heroProgress >= 0.68;
+  const revealOpacity = earlyReveal
+    ? Math.min(1, (heroProgress - 0.68) / 0.28)
+    : 1;
+
   return (
-    <div className="palace-world">
+    <div className="palace-world" style={{ opacity: revealOpacity }}>
       <AnimatePresence mode="wait">
-        <motion.div key={section} className="palace-world__scene" {...fade}>
+        <motion.div key={activeSection} className="palace-world__scene" {...fade}>
           <Scene />
         </motion.div>
       </AnimatePresence>

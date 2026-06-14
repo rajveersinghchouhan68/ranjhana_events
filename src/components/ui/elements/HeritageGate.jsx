@@ -3,25 +3,22 @@ import { assetUrl } from '../../../utils/assets';
 const GATE_IMAGE = assetUrl('assets/royal-gate-elephants.png');
 
 function ArchDoor({ side, openProgress }) {
-  const isLeft = side === 'left';
-  const angle = Math.min(82, openProgress * 88);
+  const spread = Math.min(110, openProgress * 115);
 
   return (
     <div
       className={`heritage-arch-door heritage-arch-door--${side}`}
       style={{
-        transform: isLeft
-          ? `perspective(1400px) rotateY(${angle}deg)`
-          : `perspective(1400px) rotateY(${-angle}deg)`,
+        transform:
+          side === 'left' ? `translateX(-${spread}%)` : `translateX(${spread}%)`,
       }}
     />
   );
 }
 
 function HeritageGateEntrance({ openProgress }) {
-  const textOpacity = Math.max(0, 1 - openProgress * 2.2);
-
-  if (openProgress >= 0.98) return null;
+  const textOpacity = Math.max(0, 1 - openProgress * 2.8);
+  const revealOpacity = Math.min(1, openProgress * 1.4);
 
   return (
     <div className="heritage-gate heritage-gate--sandstone">
@@ -36,11 +33,16 @@ function HeritageGateEntrance({ openProgress }) {
           />
 
           <div className="heritage-arch-doors">
+            <div
+              className="heritage-arch-doors__reveal"
+              style={{ opacity: revealOpacity }}
+              aria-hidden="true"
+            />
             <ArchDoor side="left" openProgress={openProgress} />
             <ArchDoor side="right" openProgress={openProgress} />
             <div
               className="heritage-arch-doors__seam"
-              style={{ opacity: Math.max(0, 1 - openProgress * 1.5) }}
+              style={{ opacity: Math.max(0, 1 - openProgress * 2) }}
               aria-hidden="true"
             />
           </div>
@@ -49,11 +51,7 @@ function HeritageGateEntrance({ openProgress }) {
             <div className="heritage-gate__center">
               <span className="heritage-gate__om">ॐ</span>
               <p className="heritage-gate__pre">Beginning of Forever</p>
-              <h1 className="heritage-gate__title">
-                RAANJHANA
-                <br />
-                EVENTS
-              </h1>
+              <h1 className="heritage-gate__title">RAANJHANA EVENTS</h1>
               <p className="heritage-gate__tagline">Luxury Wedding Planners</p>
               <div className="heritage-gate__divider" />
               <p className="heritage-gate__hint">Scroll to open the royal gate</p>
@@ -78,11 +76,7 @@ function HeritageLoader() {
             draggable={false}
           />
           <div className="heritage-loader__center">
-            <h2>
-              RAANJHANA
-              <br />
-              EVENTS
-            </h2>
+            <h2>RAANJHANA EVENTS</h2>
             <p>Opening your royal invitation…</p>
           </div>
         </div>
