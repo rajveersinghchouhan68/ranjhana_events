@@ -285,117 +285,124 @@
   transform-origin: center center;
 }
 
-/* Scalloped arch frame — single clip, doors slide inside */
-.heritage-arch-clips {
+/* ── Ornate golden double-door (reference-style) ── */
+.royal-ornate-door {
   position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.heritage-arch-frame {
-  position: absolute;
-  top: 11.5%;
+  top: 9.5%;
   left: 50%;
-  width: 33%;
-  height: 42%;
+  width: min(30vw, 340px);
+  height: min(44vh, 460px);
   transform: translateX(-50%);
-  z-index: 3;
+  z-index: 5;
   pointer-events: none;
-  overflow: hidden;
+  filter: drop-shadow(0 8px 28px rgba(60, 40, 10, 0.35));
 }
 
-.heritage-arch-doors__reveal {
+.royal-ornate-door__reveal {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #fff5e8 0%, #f0dcc0 45%, #e0c8a8 100%);
+  inset: 4% 2% 2%;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #fff5e8 0%, #f0dcc0 50%, #e0c8a8 100%);
   z-index: 0;
 }
 
-.heritage-arch-door {
+.royal-ornate-door__panel {
   position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(180deg, #fffefb 0%, #faf6f0 72%, #f2ebe0 100%);
   transition: transform 0.08s linear;
   will-change: transform;
-  z-index: 1;
-}
-
-.heritage-arch-door--left {
-  left: 0;
-  box-shadow: inset -2px 0 6px rgba(139, 90, 43, 0.06);
-}
-
-.heritage-arch-door--right {
-  right: 0;
-  box-shadow: inset 2px 0 6px rgba(139, 90, 43, 0.06);
-}
-
-.heritage-arch-doors__seam {
-  position: absolute;
-  top: 11%;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  transform: translateX(-50%);
-  background: rgba(139, 90, 43, 0.35);
   z-index: 2;
 }
 
-.heritage-arch-outline {
+.royal-ornate-door__panel--left {
+  left: 0;
+}
+
+.royal-ornate-door__panel--right {
+  right: 0;
+}
+
+.royal-ornate-door__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.royal-ornate-door__seam {
   position: absolute;
-  top: 11.5%;
+  top: 10%;
+  bottom: 1%;
   left: 50%;
-  width: 33%;
-  height: 42%;
+  width: 2px;
   transform: translateX(-50%);
-  z-index: 4;
-  pointer-events: none;
+  background: linear-gradient(180deg, #5a3a06, #3a2204, #5a3a06);
+  z-index: 3;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-.heritage-arch-outline__path {
-  fill: none;
-  stroke: rgba(139, 90, 43, 0.22);
-  stroke-width: 0.5;
-}
-
-.heritage-gate--sandstone .heritage-gate__overlay {
+.royal-ornate-door__text {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  background: transparent;
-}
-
-.heritage-gate--sandstone .heritage-gate__center {
-  position: relative;
-  top: auto;
-  left: auto;
-  transform: none;
-  width: 100%;
-  text-align: center;
-  padding: 8% 8% 4%;
-}
-
-.heritage-loader--sandstone .heritage-loader__center {
-  position: absolute;
-  top: 11.5%;
-  left: 50%;
-  width: 33%;
-  height: 42%;
-  transform: translateX(-50%);
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 18% 12% 10%;
+  pointer-events: none;
+}
+
+.royal-ornate-door__text .heritage-gate__pre,
+.royal-ornate-door__text .heritage-gate__tagline {
+  color: #3a2208;
+  text-shadow: 0 1px 2px rgba(255, 240, 180, 0.6);
+}
+
+.royal-ornate-door__text .heritage-gate__title {
+  color: #2a1806;
+  text-shadow: 0 1px 3px rgba(255, 240, 180, 0.8);
+}
+
+.royal-ornate-door__text .heritage-gate__hint {
+  color: #4a3010;
+}
+
+.royal-ornate-door__text .heritage-gate__divider {
+  background: linear-gradient(90deg, transparent, #6a4a10, transparent);
+}
+
+.heritage-loader__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   z-index: 2;
-  background: linear-gradient(180deg, #fffefb 0%, #faf6f0 100%);
+  color: #4a3020;
+}
+
+.heritage-loader__text h2 {
+  color: #4a3020;
+  font-size: clamp(0.85rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+}
+
+.heritage-loader__text p {
+  color: #6a4838;
+  font-size: clamp(0.55rem, 1.3vw, 0.85rem);
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .royal-ornate-door {
+    width: min(56vw, 280px);
+    height: min(38vh, 360px);
+    top: 10%;
+  }
 }
 
 .heritage-gate--sandstone .heritage-gate__title,
