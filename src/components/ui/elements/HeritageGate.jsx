@@ -49,7 +49,6 @@ function HeritageGateEntrance({ openProgress }) {
 
           <div className="heritage-gate__overlay" style={{ opacity: textOpacity }}>
             <div className="heritage-gate__center">
-              <span className="heritage-gate__om">ॐ</span>
               <p className="heritage-gate__pre">Beginning of Forever</p>
               <h1 className="heritage-gate__title">
                 RAANJHANA

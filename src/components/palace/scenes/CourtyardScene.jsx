@@ -38,7 +38,6 @@ export default function CourtyardScene() {
       <FloatingPetals count={12} />
 
       <InvitationProse
-        om
         pre="You Are Cordially Invited"
         title="Our Royal Story"
         body="Born from the sandstone soul of Rajasthan, Raanjhana Events weaves weddings like living palace folktales — where Ghoomar dancers, marigold showers, and golden dusk write your forever."
