@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useScroll } from '../../context/ScrollContext';
+import { assetUrl } from '../../utils/assets';
 import IllustratedElephant from './illustrations/IllustratedElephant';
 import IllustratedPeacock from './illustrations/IllustratedPeacock';
 
@@ -24,7 +25,7 @@ export default function IllustratedScene() {
         style={{ y: openProgress * -40, scale: 1 + openProgress * 0.05 }}
       >
         <img
-          src="/assets/palace-scene.png"
+          src={assetUrl('assets/palace-scene.png')}
           alt=""
           className="illustrated-scene__palace"
           aria-hidden="true"
@@ -47,7 +48,7 @@ export default function IllustratedScene() {
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       >
         <motion.img
-          src="/assets/dancers-frame.png"
+          src={assetUrl('assets/dancers-frame.png')}
           alt=""
           className="illustrated-scene__arch-img"
           aria-hidden="true"

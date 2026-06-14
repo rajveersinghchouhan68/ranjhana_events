@@ -1,4 +1,6 @@
-const GATE_IMAGE = '/assets/palace-gate-arch.png';
+import { assetUrl } from '../../../utils/assets';
+
+const GATE_IMAGE = assetUrl('assets/palace-gate-arch.png');
 
 function HeritageDoor({ side, openProgress }) {
   const isLeft = side === 'left';

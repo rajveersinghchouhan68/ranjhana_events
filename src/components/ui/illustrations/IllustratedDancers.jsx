@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { assetUrl } from '../../../utils/assets';
 
 export default function IllustratedDancers({ className = '' }) {
   return (
@@ -9,7 +10,7 @@ export default function IllustratedDancers({ className = '' }) {
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       >
         <img
-          src="/assets/dancers-frame.png"
+          src={assetUrl('assets/dancers-frame.png')}
           alt=""
           className="illustrated-dancers__img"
           aria-hidden="true"
