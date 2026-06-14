@@ -1,5 +1,22 @@
 /* Raanjhana Events — Royal Rajasthani Cinematic Experience */
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 :root {
   --ivory: #fffaf7;
   --soft-white: #fff5f0;
