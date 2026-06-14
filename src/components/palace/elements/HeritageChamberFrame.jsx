@@ -1,12 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import HeritagePole from './HeritagePole';
-import ElephantProcession from './ElephantProcession';
 
-export default function HeritageChamberFrame({ image, alt, focus = 'center center', elephantProgress = 0 }) {
+export default function HeritageChamberFrame({ image, alt, focus = 'center center' }) {
   return (
     <div className="heritage-chamber__frame">
-      <ElephantProcession progress={elephantProgress} />
-
       <div className="heritage-chamber__poles-row">
         <HeritagePole />
 

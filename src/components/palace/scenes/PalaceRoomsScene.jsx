@@ -3,6 +3,7 @@ import { useScroll } from '../../../context/ScrollContext';
 import { assetUrl } from '../../../utils/assets';
 import FloatingPetals from '../elements/FloatingPetals';
 import HeritageChamberFrame from '../elements/HeritageChamberFrame';
+import ElephantProcession from '../elements/ElephantProcession';
 
 const ROOMS = [
   {
@@ -66,6 +67,8 @@ export default function PalaceRoomsScene() {
       <div className="rooms-stage__garland rooms-stage__garland--r" aria-hidden="true" />
       <FloatingPetals count={12} />
 
+      <ElephantProcession progress={roomLocal} />
+
       <div className="heritage-chamber">
         <div className="heritage-chamber__stage">
           <div className="heritage-chamber__content">
@@ -90,7 +93,6 @@ export default function PalaceRoomsScene() {
               image={room.image}
               alt={room.name}
               focus={room.focus}
-              elephantProgress={roomLocal}
             />
           </div>
         </div>

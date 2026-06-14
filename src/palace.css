@@ -1149,7 +1149,7 @@
 
 .heritage-chamber {
   position: relative;
-  z-index: 5;
+  z-index: 6;
   width: min(400px, 94vw);
   display: flex;
   flex-direction: column;
@@ -1169,15 +1169,15 @@
   width: 100%;
 }
 
-/* Elephant baraat — walk in from both edges, hide behind photo */
+/* Elephant baraat — full-page bottom corners → center behind photo */
 .elephant-procession {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 52%;
-  min-height: 260px;
-  z-index: 1;
+  width: 100vw;
+  height: 240px;
+  z-index: 4;
   pointer-events: none;
   overflow: visible;
 }
@@ -1192,30 +1192,28 @@
 
 .elephant-procession__ground-line {
   position: absolute;
-  bottom: 72px;
-  left: 4%;
-  right: 4%;
+  bottom: 32px;
+  left: 0;
+  right: 0;
   height: 2px;
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    rgba(245, 200, 66, 0.35) 15%,
+    rgba(245, 200, 66, 0.45) 0%,
     rgba(232, 185, 35, 0.55) 50%,
-    rgba(245, 200, 66, 0.35) 85%,
-    transparent 100%
+    rgba(245, 200, 66, 0.45) 100%
   );
   border-radius: 2px;
 }
 
 .elephant-procession__path {
   position: absolute;
-  bottom: 68px;
-  left: 6%;
-  right: 6%;
-  height: 40px;
-  border-bottom: 1px dashed rgba(245, 208, 96, 0.12);
+  bottom: 28px;
+  left: 2%;
+  right: 2%;
+  height: 36px;
+  border-bottom: 1px dashed rgba(245, 208, 96, 0.14);
   border-radius: 0 0 50% 50%;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .elephant-procession__elephant {
@@ -1276,7 +1274,7 @@
 
 .elephant-procession__dust {
   position: absolute;
-  bottom: 70px;
+  bottom: 30px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -1292,7 +1290,7 @@
 
 .elephant-procession__spark {
   position: absolute;
-  bottom: 76px;
+  bottom: 36px;
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -1357,7 +1355,6 @@
 .heritage-chamber__frame {
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
 .heritage-chamber__poles-row {
