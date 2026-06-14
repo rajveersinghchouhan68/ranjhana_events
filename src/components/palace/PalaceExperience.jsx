@@ -14,13 +14,6 @@ const SCENES = {
   5: SunsetInviteScene,
 };
 
-const fade = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-};
-
 export default function PalaceExperience() {
   const { section, heroProgress } = useScroll();
 
@@ -39,8 +32,15 @@ export default function PalaceExperience() {
 
   return (
     <div className="palace-world" style={{ opacity: revealOpacity }}>
-      <AnimatePresence mode="wait">
-        <motion.div key={activeSection} className="palace-world__scene" {...fade}>
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={activeSection}
+          className="palace-world__scene"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
           <Scene />
         </motion.div>
       </AnimatePresence>

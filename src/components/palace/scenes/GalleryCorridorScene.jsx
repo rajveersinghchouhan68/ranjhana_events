@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 
 const PAINTINGS = [
-  { title: 'Udaipur Lake Palace', seed: 'udaipur-palace' },
-  { title: 'Royal Mandap', seed: 'royal-mandap' },
-  { title: 'Golden Hour Vows', seed: 'golden-vows' },
-  { title: 'Palace Procession', seed: 'palace-procession' },
-  { title: 'Starlit Reception', seed: 'starlit-reception' },
-  { title: 'Heritage Portrait', seed: 'heritage-portrait' },
+  { title: 'Udaipur Lake Palace', hue: '210' },
+  { title: 'Royal Mandap', hue: '28' },
+  { title: 'Golden Hour Vows', hue: '350' },
+  { title: 'Palace Procession', hue: '42' },
+  { title: 'Starlit Reception', hue: '265' },
+  { title: 'Heritage Portrait', hue: '15' },
 ];
 
 export default function GalleryCorridorScene() {
@@ -28,17 +28,12 @@ export default function GalleryCorridorScene() {
             <motion.div
               key={p.title}
               className="gallery-corridor__painting"
-              style={{ '--i': i }}
+              style={{ '--i': i, '--hue': p.hue }}
               whileHover={{ scale: 1.04, rotateY: 2 }}
               transition={{ type: 'spring', stiffness: 120 }}
             >
               <div className="gallery-corridor__frame">
-                <img
-                  src={`https://picsum.photos/seed/${p.seed}/400/500`}
-                  alt=""
-                  className="gallery-corridor__photo"
-                  loading="lazy"
-                />
+                <div className="gallery-corridor__canvas" aria-hidden="true" />
                 <span className="gallery-corridor__plaque">{p.title}</span>
               </div>
             </motion.div>

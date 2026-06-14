@@ -51,7 +51,11 @@ function HeritageGateEntrance({ openProgress }) {
             <div className="heritage-gate__center">
               <span className="heritage-gate__om">ॐ</span>
               <p className="heritage-gate__pre">Beginning of Forever</p>
-              <h1 className="heritage-gate__title">RAANJHANA EVENTS</h1>
+              <h1 className="heritage-gate__title">
+                RAANJHANA
+                <br />
+                EVENTS
+              </h1>
               <p className="heritage-gate__tagline">Luxury Wedding Planners</p>
               <div className="heritage-gate__divider" />
               <p className="heritage-gate__hint">Scroll to open the royal gate</p>
