@@ -1034,130 +1034,314 @@
 
 /* ── Scene 5: Palace Rooms ── */
 .palace-scene--rooms {
-  background: linear-gradient(180deg, #3d2a32, #2a1f24);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: linear-gradient(165deg, #1a0f14 0%, #3d1f28 35%, #5c3040 65%, #2a1820 100%);
+  overflow: hidden;
 }
 
-.palace-rooms__chamber {
-  position: relative;
-  width: min(520px, 88vw);
-  height: min(420px, 60vh);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: -8vh;
-}
-
-.palace-rooms__hall {
-  display: none;
-}
-
-.palace-rooms__room {
-  display: none;
-}
-
-.palace-rooms__jharokha {
+.rooms-stage__bg {
   position: absolute;
-  top: 10%;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201, 162, 39, 0.12), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(196, 30, 90, 0.08), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(232, 93, 4, 0.08), transparent);
+  z-index: 0;
+}
+
+.rooms-stage__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    repeating-linear-gradient(45deg, #c9a227 0, #c9a227 1px, transparent 1px, transparent 12px),
+    repeating-linear-gradient(-45deg, #c9a227 0, #c9a227 1px, transparent 1px, transparent 12px);
+  z-index: 0;
+}
+
+.rooms-stage__glow {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  width: min(500px, 80vw);
+  height: min(400px, 55vh);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, var(--room-glow, rgba(201,162,39,0.15)), transparent 70%);
+  z-index: 1;
+  transition: background 0.6s ease;
+  pointer-events: none;
+}
+
+.rooms-stage__garland {
+  position: absolute;
+  top: 56px;
+  width: 48px;
+  height: 75%;
+  background: repeating-linear-gradient(
+    180deg,
+    #e85d04 0px,
+    #e85d04 10px,
+    #2d8a4e 10px,
+    #2d8a4e 20px
+  );
+  opacity: 0.28;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.rooms-stage__garland--l { left: 1.5%; }
+.rooms-stage__garland--r { right: 1.5%; }
+
+.rooms-stage__lanterns {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.rooms-stage__lantern {
+  position: absolute;
+  width: 22px;
+  height: 32px;
+  background: linear-gradient(180deg, #f5d060, #c9a227 60%, #8b6914);
+  border-radius: 4px 4px 8px 8px;
+  box-shadow: 0 0 20px rgba(255, 200, 80, 0.5), 0 0 40px rgba(201, 162, 39, 0.2);
+  animation: rooms-lantern-glow 3s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.8s);
+}
+
+.rooms-stage__lantern::before {
+  content: '';
+  position: absolute;
+  top: -6px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(300px, 50vw);
-  height: 60%;
-  border: 2px solid rgba(201, 162, 39, 0.4);
-  border-radius: 50% 50% 0 0 / 20% 20% 0 0;
-  background: linear-gradient(180deg, rgba(255, 248, 235, 0.05), transparent);
+  width: 14px;
+  height: 6px;
+  background: #8b6914;
+  border-radius: 2px 2px 0 0;
 }
 
-.palace-rooms__arch {
+.rooms-stage__lantern::after {
+  content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.5;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 8px;
+  background: #c9a227;
+  border-radius: 0 0 3px 3px;
 }
 
-.palace-rooms__content {
+.rooms-stage__lantern:nth-child(1) { top: 18%; left: 12%; }
+.rooms-stage__lantern:nth-child(2) { top: 18%; right: 12%; }
+.rooms-stage__lantern:nth-child(3) { top: 14%; left: 28%; }
+.rooms-stage__lantern:nth-child(4) { top: 14%; right: 28%; }
+
+@keyframes rooms-lantern-glow {
+  0%, 100% { box-shadow: 0 0 16px rgba(255, 200, 80, 0.4), 0 0 30px rgba(201, 162, 39, 0.15); }
+  50% { box-shadow: 0 0 28px rgba(255, 220, 100, 0.7), 0 0 50px rgba(201, 162, 39, 0.35); }
+}
+
+.rooms-stage__chamber {
+  position: absolute;
+  top: clamp(148px, 21vh, 188px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(380px, 82vw);
+  z-index: 5;
+}
+
+.rooms-stage__frame-wrap {
   position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 20px;
-  max-width: 400px;
 }
 
-.palace-rooms__number {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  color: var(--accent);
-  letter-spacing: 0.3em;
+.palace-jharokha {
+  width: 100%;
+  height: auto;
   display: block;
-  margin-bottom: 8px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
 }
 
-.palace-rooms__content h3 {
+.rooms-stage__window {
+  position: absolute;
+  top: 9%;
+  left: 14%;
+  width: 72%;
+  height: 58%;
+  overflow: hidden;
+  clip-path: polygon(6% 6%, 94% 6%, 94% 86%, 50% 94%, 6% 86%);
+  z-index: 1;
+}
+
+.rooms-stage__visual {
+  position: absolute;
+  inset: 0;
+}
+
+.rooms-stage__visual--next {
+  z-index: 2;
+}
+
+.rooms-stage__room-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.6s ease, opacity 0.4s ease;
+}
+
+.rooms-stage__folk-visual {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+  padding-bottom: 8%;
+  background: linear-gradient(180deg, #f5e6d0, #e8c898);
+}
+
+.rooms-stage__folk-visual .rajasthani-drummer__svg,
+.rooms-stage__folk-visual .ghoomar-dancer__svg {
+  width: min(56px, 18%);
+}
+
+.rooms-stage__card {
+  position: relative;
+  z-index: 6;
+  margin-top: 10px;
+  text-align: center;
+  padding: 18px 24px 20px;
+  width: min(400px, 90vw);
+  background: rgba(20, 10, 14, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.rooms-stage__tag {
+  display: inline-block;
+  font-family: var(--font-elegant);
+  font-size: 0.7rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  padding: 2px 10px;
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  opacity: 0.9;
+}
+
+.rooms-stage__number {
+  display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-size: 0.65rem;
+  color: rgba(201, 162, 39, 0.7);
+  letter-spacing: 0.3em;
+  margin-bottom: 6px;
+}
+
+.rooms-stage__card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 3.2vw, 1.7rem);
   color: #f5e6d0;
   margin-bottom: 8px;
+  letter-spacing: 0.06em;
 }
 
-.palace-rooms__content p {
+.rooms-stage__card p {
   font-family: var(--font-elegant);
   font-style: italic;
-  font-size: 0.9rem;
-  color: rgba(245, 230, 210, 0.75);
-  line-height: 1.5;
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+  color: rgba(245, 230, 210, 0.82);
+  line-height: 1.55;
 }
 
-.palace-rooms__lanterns span {
-  position: absolute;
-  width: 16px;
-  height: 24px;
-  background: #c9a227;
-  border-radius: 3px;
-  box-shadow: 0 0 12px rgba(255, 200, 80, 0.4);
-  animation: lantern-glow 3s ease-in-out infinite;
-}
-
-.palace-rooms__lanterns span:nth-child(1) { top: 20%; left: 15%; }
-.palace-rooms__lanterns span:nth-child(2) { top: 20%; right: 15%; animation-delay: -1s; }
-.palace-rooms__lanterns span:nth-child(3) { top: 15%; left: 50%; animation-delay: -2s; }
-
-.palace-rooms__progress {
+.rooms-stage__progress {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #c9a227, #e8a0b0);
+  height: 3px;
+  background: linear-gradient(90deg, var(--room-accent, #c9a227), #e8a0b0, #c9a227);
   transform-origin: left;
   z-index: 50;
 }
 
-.palace-rooms__dots {
+.rooms-stage__dots {
   position: absolute;
-  bottom: clamp(100px, 14vh, 140px);
+  bottom: clamp(88px, 12vh, 120px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 12px;
   z-index: 12;
 }
 
-.palace-rooms__dot {
-  width: 8px;
-  height: 8px;
+.rooms-stage__dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(201, 162, 39, 0.3);
-  transition: background 0.3s, transform 0.3s;
+  background: rgba(201, 162, 39, 0.25);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  transition: background 0.4s, transform 0.4s, box-shadow 0.4s;
 }
 
-.palace-rooms__dot.is-active {
+.rooms-stage__dot.is-active {
   background: var(--accent, #c9a227);
-  transform: scale(1.3);
+  transform: scale(1.35);
+  box-shadow: 0 0 12px var(--accent, #c9a227);
+}
+
+.palace-scene--rooms .invitation-prose {
+  top: clamp(64px, 8vh, 80px);
+  bottom: auto;
+  z-index: 10;
+  width: min(520px, 92vw);
+  padding: 10px 16px;
+}
+
+.palace-scene--rooms .invitation-prose__title {
+  font-size: clamp(1rem, 2.8vw, 1.5rem);
+  margin-bottom: 4px;
+}
+
+.palace-scene--rooms .invitation-prose__body {
+  font-size: clamp(0.75rem, 1.5vw, 0.88rem);
+}
+
+.palace-scene--rooms .invitation-prose__pre {
+  color: rgba(232, 196, 160, 0.85);
+}
+
+.palace-scene--rooms .invitation-prose__title {
+  color: #f5e6d0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.palace-scene--rooms .invitation-prose__body {
+  color: rgba(245, 230, 210, 0.75);
+}
+
+.palace-scene--rooms .invitation-prose__border {
+  background: rgba(20, 10, 14, 0.25);
+  border-color: rgba(201, 162, 39, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+/* Legacy class aliases (unused) */
+.palace-rooms__chamber,
+.palace-rooms__hall,
+.palace-rooms__room,
+.palace-rooms__jharokha,
+.palace-rooms__arch,
+.palace-rooms__content,
+.palace-rooms__lanterns,
+.palace-rooms__dots,
+.palace-rooms__dot,
+.palace-rooms__progress {
+  display: none;
 }
 
 /* ── Scene 6: Sunset + Invitation ── */
