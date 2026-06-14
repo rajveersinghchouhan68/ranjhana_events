@@ -780,139 +780,256 @@
   width: 100%;
 }
 
-/* ── Scene 4: Gallery Corridor ── */
+/* ── Scene 4: Rajasthani Folk Performance (Gallery) ── */
 .palace-scene--gallery {
-  background: linear-gradient(180deg, #2a1f24, #3d2a32);
-  perspective: 800px;
-  padding-top: 88px;
+  background: linear-gradient(180deg, #fff5e8 0%, #f0dcc0 50%, #e8c8a0 100%);
+  overflow: hidden;
+  padding-top: 64px;
 }
 
-.gallery-corridor__header {
-  position: absolute;
-  top: 68px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 12;
-  text-align: center;
-  width: min(640px, 92vw);
-  pointer-events: none;
-}
-
-.gallery-corridor__header p {
-  font-family: var(--font-elegant);
-  font-style: italic;
-  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
-  color: #e8c4a0;
-  margin-bottom: 4px;
-}
-
-.gallery-corridor__header h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  letter-spacing: 0.1em;
-  color: #f5e6d0;
-}
-
-.gallery-corridor__perspective {
+.folk-stage__sky {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
+  background: linear-gradient(180deg, #fff8f0 0%, #f5e0c8 40%, transparent 70%);
+  z-index: 0;
 }
 
-.gallery-corridor__wall {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 30%;
-  background: linear-gradient(90deg, #4a3540, #3a2830);
-}
-
-.gallery-corridor__wall--left { left: 0; transform: rotateY(12deg); transform-origin: left; }
-.gallery-corridor__wall--right { right: 0; transform: rotateY(-12deg); transform-origin: right; }
-
-.gallery-corridor__floor {
+.folk-stage__courtyard {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 30%;
-  background: linear-gradient(180deg, #5a4550, #3a2830);
-  transform: rotateX(60deg);
-  transform-origin: bottom;
+  height: 45%;
+  background: linear-gradient(180deg, #e8c898 0%, #d4a870 100%);
+  border-radius: 50% 50% 0 0 / 8% 8% 0 0;
+  z-index: 0;
 }
 
-.gallery-corridor__ceiling {
+.folk-stage__garland {
   position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 15%;
-  background: linear-gradient(180deg, #2a1f24, transparent);
+  top: 60px;
+  width: 60px;
+  height: 70%;
+  background: repeating-linear-gradient(
+    180deg,
+    #e85d04 0px,
+    #e85d04 12px,
+    #2d8a4e 12px,
+    #2d8a4e 24px
+  );
+  opacity: 0.35;
+  border-radius: 4px;
+  z-index: 1;
 }
 
-.gallery-corridor__frames {
+.folk-stage__garland--l { left: 2%; }
+.folk-stage__garland--r { right: 2%; }
+
+/* Drummers */
+.folk-stage__drummer {
   position: absolute;
-  top: 32%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 3vw, 32px);
-  width: min(700px, 85vw);
-  z-index: 5;
+  z-index: 3;
+  width: min(100px, 18vw);
 }
 
-.gallery-corridor__painting {
-  transform-style: preserve-3d;
-  cursor: pointer;
+.folk-stage__drummer--side-l { bottom: 12%; left: 4%; }
+.folk-stage__drummer--side-r { bottom: 12%; right: 4%; }
+
+.rajasthani-drummer__svg,
+.ghoomar-dancer__svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.gallery-corridor__frame {
-  border: 6px solid #c9a227;
-  padding: 6px;
-  background: #1a1218;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(201, 162, 39, 0.1);
+.rajasthani-drummer__beat--l {
+  transform-origin: 32px 70px;
+  animation: drum-hit-l var(--drum-beat, 0.4s) ease-in-out infinite;
 }
 
-.gallery-corridor__canvas {
-  aspect-ratio: 4/5;
-  background:
-    radial-gradient(circle at 30% 25%, hsla(var(--hue), 55%, 72%, 0.55), transparent 45%),
-    radial-gradient(circle at 70% 65%, hsla(calc(var(--hue) + 30), 50%, 58%, 0.45), transparent 50%),
-    linear-gradient(155deg, hsl(var(--hue), 38%, 28%), hsl(calc(var(--hue) + 18), 42%, 18%));
-  position: relative;
-  overflow: hidden;
+.rajasthani-drummer__beat--r {
+  transform-origin: 58px 70px;
+  animation: drum-hit-r var(--drum-beat, 0.4s) ease-in-out infinite;
+  animation-delay: calc(var(--drum-beat, 0.4s) * 0.5);
 }
 
-.gallery-corridor__canvas::before {
-  content: '';
+@keyframes drum-hit-l {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-22deg); }
+}
+
+@keyframes drum-hit-r {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(22deg); }
+}
+
+/* Ghoomar dancers */
+.folk-stage__dancer {
+  position: absolute;
+  z-index: 4;
+  width: min(80px, 14vw);
+  transform: translate(-50%, -50%);
+}
+
+.folk-stage__dancer--parade {
+  animation: ghoomar-sway 1.2s ease-in-out infinite;
+}
+
+@keyframes ghoomar-sway {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-3deg); }
+  50% { transform: translate(-50%, -50%) rotate(3deg); }
+}
+
+.ghoomar-dancer__arm--l {
+  transform-origin: 32px 50px;
+  animation: arm-sway-l 1s ease-in-out infinite;
+}
+
+.ghoomar-dancer__arm--r {
+  transform-origin: 48px 50px;
+  animation: arm-sway-r 1s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.ghoomar-dancer__dupatta {
+  animation: dupatta-flow 2s ease-in-out infinite;
+  transform-origin: 52px 38px;
+}
+
+@keyframes arm-sway-l {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-12deg); }
+}
+
+@keyframes arm-sway-r {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(12deg); }
+}
+
+@keyframes dupatta-flow {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+}
+
+.folk-stage__parade,
+.folk-stage__circle {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.25));
+  z-index: 2;
+  pointer-events: none;
 }
 
-.gallery-corridor__canvas::after {
-  content: '✦';
+.folk-stage__circle-ring {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
+  width: min(78vw, 600px);
+  height: min(42vh, 340px);
   transform: translate(-50%, -50%);
-  font-size: 1.4rem;
-  color: rgba(255, 220, 160, 0.35);
+  border: 2px dashed rgba(201, 162, 39, 0.45);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.08);
 }
 
-.gallery-corridor__photo {
-  display: none;
+.folk-stage__center-drummers {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -42%);
+  display: flex;
+  gap: clamp(6px, 1.5vw, 16px);
+  z-index: 6;
 }
 
-.gallery-corridor__plaque {
-  display: block;
-  text-align: center;
+.folk-stage__center-drummers .rajasthani-drummer__svg {
+  width: min(72px, 14vw);
+}
+
+.folk-stage__dancer--circle {
+  animation: ghoomar-spin 3s linear infinite;
+}
+
+@keyframes ghoomar-spin {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) rotate(6deg); }
+}
+
+/* Wedding memory photos in circle phase */
+.folk-stage__memory-photos {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(8px, 2vw, 16px);
+  z-index: 3;
+  opacity: var(--circle-opacity, 0);
+  transition: opacity 0.3s ease;
+}
+
+.folk-stage__memory {
+  position: relative;
+  width: min(88px, 16vw);
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  opacity: 0.95;
+  transform: translateY(calc((1 - var(--circle-opacity, 0)) * 20px));
+  transition: transform 0.5s ease;
+}
+
+.folk-stage__memory img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.12) saturate(1.1);
+}
+
+.folk-stage__memory-frame {
+  position: absolute;
+  inset: 0;
+  border: 3px solid #c9a227;
+  box-shadow: inset 0 0 8px rgba(201, 162, 39, 0.2);
+  pointer-events: none;
+}
+
+.folk-stage__memory-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-elegant);
-  font-size: 0.65rem;
-  color: #e8c4a0;
-  margin-top: 6px;
-  letter-spacing: 0.05em;
+  font-size: 0.55rem;
+  color: #5a3828;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+.palace-scene--gallery .invitation-prose {
+  z-index: 10;
+  top: clamp(72px, 10vh, 96px);
+  bottom: auto;
+  transform: translateX(-50%) scale(var(--prose-scale, 1));
+  opacity: var(--prose-opacity, 1);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.palace-scene--gallery .invitation-prose__pre,
+.palace-scene--gallery .invitation-prose__title,
+.palace-scene--gallery .invitation-prose__body {
+  color: #4a3020;
+}
+
+.palace-scene--gallery .invitation-prose__pre {
+  color: #6a4838;
+}
+
+.palace-scene--gallery .invitation-prose__body {
+  color: rgba(74, 48, 32, 0.88);
+}
+
+.palace-scene--gallery .invitation-prose__border {
+  background: rgba(255, 248, 240, 0.6);
+  border-color: rgba(201, 162, 39, 0.4);
 }
 
 /* ── Scene 5: Palace Rooms ── */
@@ -1394,5 +1511,4 @@
     gap: 16px;
   }
   .palace-nav__links.open { display: flex; }
-  .gallery-corridor__frames { grid-template-columns: repeat(2, 1fr); }
 }
