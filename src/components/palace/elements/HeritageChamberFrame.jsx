@@ -5,12 +5,12 @@ import ElephantProcession from './ElephantProcession';
 export default function HeritageChamberFrame({ image, alt, focus = 'center center', elephantProgress = 0 }) {
   return (
     <div className="heritage-chamber__frame">
+      <ElephantProcession progress={elephantProgress} />
+
       <div className="heritage-chamber__poles-row">
         <HeritagePole />
 
         <div className="heritage-chamber__window-wrap">
-          <ElephantProcession progress={elephantProgress} />
-
           <div className="heritage-chamber__window">
             <AnimatePresence mode="wait">
               <motion.img
@@ -28,6 +28,7 @@ export default function HeritageChamberFrame({ image, alt, focus = 'center cente
               />
             </AnimatePresence>
             <div className="heritage-chamber__veil" aria-hidden="true" />
+            <div className="heritage-chamber__photo-skirt" aria-hidden="true" />
           </div>
         </div>
 

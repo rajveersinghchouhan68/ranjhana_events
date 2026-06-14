@@ -26,8 +26,8 @@ const ROOMS = [
     catch: 'White-glove welcome from baraat to farewell.',
     tag: 'Royal Welcome',
     accent: '#2d8a4e',
-    image: assetUrl('assets/elephant-decorated.png'),
-    focus: 'center bottom',
+    image: assetUrl('assets/mandap-elephants.png'),
+    focus: 'center 50%',
   },
   {
     name: 'Entertainment',

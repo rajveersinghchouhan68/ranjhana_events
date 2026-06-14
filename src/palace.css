@@ -1169,104 +1169,149 @@
   width: 100%;
 }
 
-/* Elephant baraat — two elephants walk in from both sides on scroll */
+/* Elephant baraat — walk in from both edges, hide behind photo */
 .elephant-procession {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 55%;
-  min-height: 300px;
+  height: 52%;
+  min-height: 260px;
   z-index: 1;
   pointer-events: none;
   overflow: visible;
 }
 
-.elephant-procession--behind {
-  z-index: 1;
-}
-
 .elephant-procession--behind .elephant-procession__elephant {
-  filter: brightness(0.72) saturate(0.85)
-    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+  filter: brightness(0.68) saturate(0.8);
 }
 
 .elephant-procession--hidden .elephant-procession__elephant {
   opacity: 0 !important;
-  pointer-events: none;
 }
 
 .elephant-procession__ground-line {
   position: absolute;
-  bottom: 80px;
-  left: 0;
-  right: 0;
-  height: 1px;
+  bottom: 72px;
+  left: 4%;
+  right: 4%;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(245, 200, 66, 0.25) 20%,
-    rgba(245, 200, 66, 0.25) 80%,
+    rgba(245, 200, 66, 0.35) 15%,
+    rgba(232, 185, 35, 0.55) 50%,
+    rgba(245, 200, 66, 0.35) 85%,
     transparent 100%
   );
+  border-radius: 2px;
+}
+
+.elephant-procession__path {
+  position: absolute;
+  bottom: 68px;
+  left: 6%;
+  right: 6%;
+  height: 40px;
+  border-bottom: 1px dashed rgba(245, 208, 96, 0.12);
+  border-radius: 0 0 50% 50%;
+  opacity: 0.6;
 }
 
 .elephant-procession__elephant {
   position: absolute;
   width: auto;
+  height: 200px;
   will-change: left, bottom, opacity;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.7));
-  transition: none;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
 }
 
-/* Original asset faces left */
-.elephant-procession__elephant--l {
-  transform: scaleX(-1);
-  transform-origin: center bottom;
-}
-
-.elephant-procession__elephant--r {
-  transform-origin: center bottom;
+.procession-elephant__svg {
+  width: auto;
+  height: 100%;
+  display: block;
+  background: transparent;
 }
 
 .elephant-procession--walking .elephant-procession__elephant--l {
-  animation: elephant-walk-l 0.7s ease-in-out infinite;
+  animation: elephant-walk-l 0.65s ease-in-out infinite;
 }
 
 .elephant-procession--walking .elephant-procession__elephant--r {
-  animation: elephant-walk-r 0.7s ease-in-out infinite;
-  animation-delay: 0.35s;
+  animation: elephant-walk-r 0.65s ease-in-out infinite;
+  animation-delay: 0.32s;
 }
 
 @keyframes elephant-walk-l {
-  0%, 100% { transform: scaleX(-1) translateY(0); }
-  50% { transform: scaleX(-1) translateY(-4px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-1.2deg); }
+  50% { transform: translateY(-2px) rotate(0deg); }
+  75% { transform: translateY(-7px) rotate(1deg); }
 }
 
 @keyframes elephant-walk-r {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-7px) rotate(1.2deg); }
+  50% { transform: translateY(-2px) rotate(0deg); }
+  75% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+.elephant-procession__foot {
+  position: absolute;
+  bottom: 2px;
+  width: 18px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+  animation: elephant-foot 0.65s ease-in-out infinite;
+}
+
+.elephant-procession__foot--l { left: 22%; }
+.elephant-procession__foot--r { right: 22%; animation-delay: 0.32s; }
+
+@keyframes elephant-foot {
+  0%, 100% { transform: scaleX(1); opacity: 0.5; }
+  50% { transform: scaleX(1.4); opacity: 0.2; }
 }
 
 .elephant-procession__dust {
   position: absolute;
-  bottom: 78px;
-  width: 36px;
-  height: 36px;
+  bottom: 70px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(180, 140, 80, 0.15);
-  animation: elephant-dust 0.6s ease-out infinite;
+  background: rgba(180, 140, 80, 0.18);
+  animation: elephant-dust 0.55s ease-out infinite;
 }
 
 .elephant-procession__dust--delay {
-  width: 22px;
-  height: 22px;
-  animation-delay: 0.3s;
+  width: 20px;
+  height: 20px;
+  animation-delay: 0.28s;
+}
+
+.elephant-procession__spark {
+  position: absolute;
+  bottom: 76px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 208, 96, 0.7);
+  animation: elephant-spark 0.65s ease-out infinite;
+}
+
+.elephant-procession__spark--delay {
+  animation-delay: 0.32s;
 }
 
 @keyframes elephant-dust {
-  0% { transform: scale(0); opacity: 0.8; }
-  100% { transform: scale(3); opacity: 0; }
+  0% { transform: scale(0); opacity: 0.75; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes elephant-spark {
+  0% { transform: translateY(0) scale(1); opacity: 0.9; }
+  100% { transform: translateY(-14px) scale(0.3); opacity: 0; }
 }
 
 .heritage-chamber__plaque {
@@ -1310,10 +1355,14 @@
 
 /* Heritage jharokha frame with poles */
 .heritage-chamber__frame {
+  position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .heritage-chamber__poles-row {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: stretch;
   gap: 6px;
@@ -1337,7 +1386,6 @@
   flex-direction: column;
   align-items: stretch;
   overflow: visible;
-  padding-bottom: 28px;
 }
 
 .heritage-chamber__window {
@@ -1355,6 +1403,17 @@
     inset 0 0 24px rgba(201, 162, 39, 0.1),
     0 10px 32px rgba(0, 0, 0, 0.38);
   z-index: 2;
+}
+
+.heritage-chamber__photo-skirt {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: -2px;
+  height: 28%;
+  background: linear-gradient(180deg, transparent 0%, rgba(250, 243, 228, 0.92) 35%, #edd5a8 100%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .heritage-chamber__photo {
