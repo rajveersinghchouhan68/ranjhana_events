@@ -1,21 +1,11 @@
-import { createContext, useContext, useSyncExternalStore } from 'react';
-import { scrollStore } from '../scrollStore';
+import { createContext, useContext } from 'react';
 
-export const ScrollContext = createContext(scrollStore.get());
-
-export function ScrollProvider({ children }) {
-  const scroll = useSyncExternalStore(
-    scrollStore.subscribe,
-    scrollStore.get,
-    scrollStore.get,
-  );
-
-  return (
-    <ScrollContext.Provider value={scroll}>
-      {children}
-    </ScrollContext.Provider>
-  );
-}
+export const ScrollContext = createContext({
+  progress: 0,
+  section: 0,
+  heroProgress: 0,
+  sectionProgress: 0,
+});
 
 export function useScroll() {
   return useContext(ScrollContext);
@@ -41,27 +31,4 @@ export function lerp(a, b, t) {
 
 export function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
-}
-
-function clamp01(v) {
-  return Math.min(1, Math.max(0, v));
-}
-
-function smoothstep(edge0, edge1, x) {
-  const t = clamp01((x - edge0) / (edge1 - edge0));
-  return t * t * (3 - 2 * t);
-}
-
-/** Crossfade opacity for a palace layer across global scroll progress. */
-export function layerOpacity(globalProgress, phase, blend = 0.06) {
-  const { start, end } = SCENE_PHASES[phase];
-  if (globalProgress < start - blend) return 0;
-  if (globalProgress < start + blend) {
-    return smoothstep(start - blend, start + blend, globalProgress);
-  }
-  if (globalProgress > end + blend) return 0;
-  if (globalProgress > end - blend) {
-    return 1 - smoothstep(end - blend, end + blend, globalProgress);
-  }
-  return 1;
 }

@@ -1,9 +1,6 @@
-import { useRef, useState, useEffect, Suspense, useSyncExternalStore } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollProvider } from './context/ScrollContext';
-import { scrollStore } from './scrollStore';
+import { ScrollContext } from './context/ScrollContext';
 import Experience from './components/canvas/Experience';
 import Loader from './components/ui/Loader';
 import Nav from './components/ui/Nav';
@@ -12,9 +9,7 @@ import PalaceExperience from './components/palace/PalaceExperience';
 import RoyalInvitationScene from './components/palace/RoyalInvitationScene';
 import ErrorBoundary from './components/ErrorBoundary';
 
-gsap.registerPlugin(ScrollTrigger);
-
-function syncPalaceScroll(scrollY, mainEl) {
+function syncPalaceScroll(scrollY, mounted, setScroll, mainEl) {
   const panels = document.querySelectorAll('.palace-panel[data-scene]');
   let section = 0;
   let sectionProgress = 0;
@@ -42,49 +37,30 @@ function syncPalaceScroll(scrollY, mainEl) {
     progress = max > 0 ? Math.min(1, scrollY / max) : 0;
   }
 
-  scrollStore.set({
-    progress,
-    section,
-    sectionProgress,
-    heroProgress,
-  });
-}
-
-function AppContent() {
-  const scroll = useSyncExternalStore(
-    scrollStore.subscribe,
-    scrollStore.get,
-    scrollStore.get,
-  );
-
-  const showHero = scroll.section === 0;
-  const showCanvas = scroll.section === 0;
-  const canvasOpacity =
-    scroll.section === 0 ? Math.max(0, 0.28 - scroll.heroProgress * 0.3) : 0;
-
-  return (
-    <>
-      {showCanvas && (
-        <div className="canvas-wrap" style={{ opacity: canvasOpacity }}>
-          <Suspense fallback={null}>
-            <Experience />
-          </Suspense>
-        </div>
-      )}
-      <Nav hidden={scroll.section === 0 && scroll.heroProgress < 0.35} />
-      {showHero && <RoyalInvitationScene />}
-      <PalaceExperience />
-    </>
-  );
+  if (mounted) {
+    setScroll({
+      progress,
+      section,
+      sectionProgress,
+      heroProgress,
+    });
+  }
 }
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [scroll, setScroll] = useState({
+    progress: 0,
+    section: 0,
+    heroProgress: 0,
+    sectionProgress: 0,
+  });
   const mainRef = useRef(null);
   const lenisRef = useRef(null);
 
   useEffect(() => {
     let mounted = true;
+    let rafId = null;
 
     const finishLoading = () => {
       if (mounted) setLoading(false);
@@ -92,34 +68,28 @@ export default function App() {
 
     const timer = setTimeout(finishLoading, 1800);
 
-    let tick = null;
-
     const initScroll = () => {
       try {
         const lenis = new Lenis({
-          lerp: 0.09,
+          duration: 1.35,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
-          wheelMultiplier: 0.85,
-          touchMultiplier: 1.1,
-          syncTouch: true,
-          autoRaf: false,
+          wheelMultiplier: 1,
+          touchMultiplier: 1,
         });
         lenisRef.current = lenis;
 
-        lenis.on('scroll', () => {
-          ScrollTrigger.update();
+        lenis.on('scroll', (e) => {
+          syncPalaceScroll(e.scroll, mounted, setScroll, mainRef.current);
         });
 
-        tick = (time) => {
-          lenis.raf(time * 1000);
-          syncPalaceScroll(lenis.scroll, mainRef.current);
+        const raf = (time) => {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
         };
+        rafId = requestAnimationFrame(raf);
 
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
-
-        ScrollTrigger.refresh();
-        syncPalaceScroll(lenis.scroll, mainRef.current);
+        syncPalaceScroll(lenis.scroll, mounted, setScroll, mainRef.current);
       } catch (err) {
         console.error('Scroll init error:', err);
         finishLoading();
@@ -133,8 +103,7 @@ export default function App() {
     return () => {
       mounted = false;
       clearTimeout(timer);
-      if (tick) gsap.ticker.remove(tick);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      if (rafId) cancelAnimationFrame(rafId);
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;
@@ -142,15 +111,29 @@ export default function App() {
     };
   }, []);
 
+  const showHero = scroll.section === 0;
+  const showCanvas = scroll.section === 0;
+  const canvasOpacity =
+    scroll.section === 0 ? Math.max(0, 0.28 - scroll.heroProgress * 0.3) : 0;
+
   return (
     <ErrorBoundary>
-      <ScrollProvider>
+      <ScrollContext.Provider value={scroll}>
         {loading && <Loader />}
-        <AppContent />
+        {showCanvas && (
+          <div className="canvas-wrap" style={{ opacity: canvasOpacity }}>
+            <Suspense fallback={null}>
+              <Experience />
+            </Suspense>
+          </div>
+        )}
+        <Nav hidden={scroll.section === 0 && scroll.heroProgress < 0.35} />
+        {showHero && <RoyalInvitationScene />}
+        <PalaceExperience />
         <main ref={mainRef} className="scroll-main scroll-main--palace">
           <PalaceScrollTrack />
         </main>
-      </ScrollProvider>
+      </ScrollContext.Provider>
     </ErrorBoundary>
   );
 }
