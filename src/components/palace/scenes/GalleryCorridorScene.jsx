@@ -4,7 +4,7 @@ import InvitationProse from '../elements/InvitationProse';
 const PAINTINGS = [
   {
     title: 'Udaipur Lake Palace',
-    image: 'https://images.unsplash.com/photo-1602216052126-53e08b12f5c4?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1596176530439-5f7e8ef1fcc8?w=400&q=80',
   },
   {
     title: 'Royal Mandap',
@@ -20,11 +20,11 @@ const PAINTINGS = [
   },
   {
     title: 'Starlit Reception',
-    image: 'https://images.unsplash.com/photo-1465495976277-4387d1bacf25?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80',
   },
   {
     title: 'Heritage Portrait',
-    image: 'https://images.unsplash.com/photo-1520854221256-17451b0366fb?w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1522673606300-8d963b8af0a4?w=400&q=80',
   },
 ];
 

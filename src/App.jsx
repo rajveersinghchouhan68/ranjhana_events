@@ -13,6 +13,45 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 gsap.registerPlugin(ScrollTrigger);
 
+function syncPalaceScroll(scrollY, mounted, setScroll, mainEl) {
+  const panels = document.querySelectorAll('.palace-panel[data-scene]');
+  let section = 0;
+  let sectionProgress = 0;
+  let heroProgress = 0;
+
+  panels.forEach((panel, index) => {
+    const top = panel.offsetTop;
+    const height = panel.offsetHeight;
+    if (height <= 0) return;
+
+    const local = (scrollY - top) / height;
+    if (scrollY >= top && scrollY < top + height) {
+      section = index;
+      sectionProgress = Math.min(1, Math.max(0, local));
+    }
+
+    if (panel.id === 'hero') {
+      heroProgress = Math.min(1, Math.max(0, local));
+    }
+  });
+
+  let progress = 0;
+  if (mainEl) {
+    const max = mainEl.scrollHeight - window.innerHeight;
+    progress = max > 0 ? Math.min(1, scrollY / max) : 0;
+  }
+
+  if (mounted) {
+    setScroll((s) => ({
+      ...s,
+      progress,
+      section,
+      sectionProgress,
+      heroProgress,
+    }));
+  }
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [scroll, setScroll] = useState({
@@ -25,7 +64,6 @@ export default function App() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    let triggers = [];
     let mounted = true;
 
     const finishLoading = () => {
@@ -43,7 +81,10 @@ export default function App() {
         });
         lenisRef.current = lenis;
 
-        lenis.on('scroll', ScrollTrigger.update);
+        lenis.on('scroll', (e) => {
+          ScrollTrigger.update();
+          syncPalaceScroll(e.scroll, mounted, setScroll, mainRef.current);
+        });
 
         function raf(time) {
           lenis.raf(time);
@@ -51,66 +92,8 @@ export default function App() {
         }
         requestAnimationFrame(raf);
 
-        const hero = document.getElementById('hero');
-        if (hero) {
-          triggers.push(
-            ScrollTrigger.create({
-              trigger: hero,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.3,
-              onUpdate: (self) => {
-                if (mounted) {
-                  setScroll((s) => ({ ...s, heroProgress: self.progress }));
-                }
-              },
-            })
-          );
-        }
-
-        if (mainRef.current) {
-          triggers.push(
-            ScrollTrigger.create({
-              trigger: mainRef.current,
-              start: 'top top',
-              end: 'bottom bottom',
-              scrub: 0.5,
-              onUpdate: (self) => {
-                if (mounted) {
-                  setScroll((s) => ({ ...s, progress: self.progress }));
-                }
-              },
-            })
-          );
-        }
-
-        const panels = document.querySelectorAll('.palace-panel[data-scene]');
-        panels.forEach((panel, index) => {
-          triggers.push(
-            ScrollTrigger.create({
-              trigger: panel,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.15,
-              onToggle: (self) => {
-                if (self.isActive && mounted) {
-                  setScroll((s) => ({ ...s, section: index }));
-                }
-              },
-              onUpdate: (self) => {
-                if (self.isActive && mounted) {
-                  setScroll((s) => ({
-                    ...s,
-                    section: index,
-                    sectionProgress: self.progress,
-                  }));
-                }
-              },
-            })
-          );
-        });
-
         ScrollTrigger.refresh();
+        syncPalaceScroll(lenis.scroll, mounted, setScroll, mainRef.current);
       } catch (err) {
         console.error('Scroll init error:', err);
         finishLoading();
@@ -124,7 +107,7 @@ export default function App() {
     return () => {
       mounted = false;
       clearTimeout(timer);
-      triggers.forEach((t) => t.kill());
+      ScrollTrigger.getAll().forEach((t) => t.kill());
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;

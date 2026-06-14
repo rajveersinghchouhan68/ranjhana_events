@@ -13,6 +13,10 @@
 }
 
 /* Fixed scene layer — only one scene visible */
+.royal-scene--sandstone {
+  z-index: 10;
+}
+
 .palace-world {
   position: fixed;
   inset: 0;
@@ -612,6 +616,7 @@
 .venue__hero-elephant img {
   width: 100%;
   height: auto;
+  mix-blend-mode: multiply;
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.2));
   animation: elephant-alive 5s ease-in-out infinite;
 }
@@ -669,6 +674,22 @@
 .palace-scene--gallery {
   background: linear-gradient(180deg, #2a1f24, #3d2a32);
   perspective: 800px;
+  padding-top: 72px;
+}
+
+.palace-scene--gallery .invitation-prose {
+  bottom: auto;
+  top: 72px;
+  width: min(560px, 92vw);
+  padding: 12px 16px;
+}
+
+.palace-scene--gallery .invitation-prose__title {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+}
+
+.palace-scene--gallery .invitation-prose__body {
+  display: none;
 }
 
 .gallery-corridor__perspective {
@@ -710,7 +731,7 @@
 
 .gallery-corridor__frames {
   position: absolute;
-  top: 15%;
+  top: 28%;
   left: 50%;
   transform: translateX(-50%);
   display: grid;
